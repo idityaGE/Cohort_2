@@ -56,6 +56,9 @@ router.post('/courses/:courseId', userMiddleware, async (req, res) => {
     const { courseId } = req.params;
     const { authorization } = req.headers;
     const { username } = jwt.verify(authorization, jwtPass);
+    if(!authorization){
+        return res.status(401).json({ message: "Unauthorized" });
+    }
     if (!courseId) {
         return res.status(400).json({ message: "Course Id is required" });
     }
