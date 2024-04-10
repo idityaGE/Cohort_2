@@ -2,6 +2,8 @@ import express from 'express';
 import { createTodo, updateTodo } from './types';
 import mongoose from 'mongoose';
 import { Todo } from './db';
+import cors from 'cors';
+
 
 // server
 const app = express();
@@ -13,7 +15,11 @@ app.listen(port, () => {
 // middlewares
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
+app.use(cors(
+    {
+        origin: "http://localhost:5173" // this will allow only this frontend to make requests to this backend server
+    }
+)); // cors middleware allows us to make requests from frontend to backend otherwise we will get cors error
 
 // Routes
 app.get('/', (req, res) => {
