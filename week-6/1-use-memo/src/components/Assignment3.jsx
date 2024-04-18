@@ -4,15 +4,24 @@ import React, { useState, useMemo } from 'react';
 
 export const Assignment3 = () => {
     const [items, setItems] = useState([
-        { name: 'Chocolates', value: 10 },
+        { name: 'Chocolates', value: 50 },
         { name: 'Chips', value: 20 },
         { name: 'Onion', value: 30 },
         { name: 'Tomato', value: 30 },
         // Add more items as needed
+        { name: 'Milk', value: 25},
+        { name: 'Bread', value: 15},
+        { name: 'Butter', value: 35},
+        { name: 'Cheese', value: 45},
+        { name: 'Eggs', value: 40},
+        { name: 'Salt', value: 10},
     ]);
 
     // Your code starts here
-    const totalValue = 0;
+    // const totalValue = 0;
+    const totalValue = useMemo(() => {
+        return items.reduce((acc, item) => acc + item.value , 0);
+    }, [items]);
     // Your code ends here
     return (
         <div>
