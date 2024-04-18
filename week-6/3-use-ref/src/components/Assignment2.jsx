@@ -9,10 +9,10 @@ export function Assignment2() {
 
     const [, forceRender] = useState(0);
 
-    const handleReRender = () => {
+    const handleReRender = useCallback(() => {
         // Update state to force re-render
         forceRender(Math.random());
-    };
+    },[])
     return (
         <div>
             <p>This component has rendered {noOfRender.current} times.</p>
