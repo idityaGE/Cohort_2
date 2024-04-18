@@ -5,6 +5,7 @@ import CardWrapper from './components/CardWrapper'
 import ExampleComponent from './components/UseEffect'
 import UseMemo from './components/UseMemo'
 import UseCallback from './components/UseCallback'
+import UseRef from './components/UseRef'
 
 function App() {
   return (
@@ -13,8 +14,9 @@ function App() {
       {/* <Todo /> */}
       {/* <ExampleComponent /> */}
       {/* <UseMemo/> */}
+      {/* <UseCallback /> */}
       <CardWrapper className='w-1/2'>
-        <UseCallback />
+        <UseRef />
       </CardWrapper>
     </div>
   )
