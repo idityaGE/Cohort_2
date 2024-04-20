@@ -12,11 +12,11 @@ function App() {
   )
 }
 
-function Count({ count, setCount }) {
+function Count() {
   return (
     <div>
-      <Counter count={count} />
-      <Button setCount={setCount} />
+      <Counter />
+      <Button />
     </div>
   )
 }
