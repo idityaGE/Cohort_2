@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, memo } from 'react'
 import './App.css'
 import countContext from './Context'
 
@@ -12,14 +12,15 @@ function App() {
   )
 }
 
-function Count() {
+const Count = memo(function Count() {
+  console.log("count rendered")
   return (
     <div>
       <Counter />
       <Button />
     </div>
   )
-}
+})
 
 function Counter() {
   const { count } = useContext(countContext)
