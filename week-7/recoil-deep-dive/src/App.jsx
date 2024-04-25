@@ -1,35 +1,38 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import { RecoilRoot, useRecoilValue, useSetRecoilState } from 'recoil'
+import { networkAtom, jobsAtom, msgAtom, notificationAtom, allNotifications } from './store/store';
+
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <RecoilRoot>
+          <MainApp />
+        </RecoilRoot>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
   )
 }
+
+function MainApp() {
+  const network = useRecoilValue(networkAtom);
+  const jobs = useRecoilValue(jobsAtom);
+  const setJobs = useSetRecoilState(jobsAtom);
+  const msg = useRecoilValue(msgAtom);
+  const notification = useRecoilValue(notificationAtom);
+
+  const allNotificationsCount = useRecoilValue(allNotifications);
+  return (
+    <div>
+      <button className="ml-3">Home</button>
+      <button className="ml-3">My Network ({network})</button>
+      <button className="ml-3">Jobs ({jobs}) <button onClick={()=> setJobs(p => p+ 1)}>+</button></button>
+      <button className="ml-3">Messaging ({msg})</button>
+      <button className="ml-3">Notification ({notification >= 100 ? "99+" : notification})</button>
+      <button className="ml-3">Me ({allNotificationsCount})</button>
+    </div>
+  )
+}
+
+
 
 export default App
