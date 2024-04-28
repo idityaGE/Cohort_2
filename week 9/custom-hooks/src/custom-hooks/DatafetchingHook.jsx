@@ -12,12 +12,15 @@ function useTodos(sec) {
     }
 
     useEffect(() => {
-        setInterval(() => {
+        const interval = setInterval(() => {
             fetchTodos()
             console.log('Data fetched')
         }, sec * 1000)
         fetchTodos()
-    }, [sec])
+        return () => {
+            clearInterval(interval)
+        }
+    }, [sec]) // if sec changes, it will start another interval that why we need to clear the previous interval
 
     return { todos, loading }
 }
