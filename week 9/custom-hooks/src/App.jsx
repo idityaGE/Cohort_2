@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import React from 'react'
 import './App.css'
 import Todos from './components/Todos'
+import { Profile } from './custom-hooks/DatafetchingHook'
 
 function App() {
   const [render, setRender] = useState(true)
@@ -17,8 +18,9 @@ function App() {
     <>
       {/* <MyComponent /> */}
       {/* <ClassComponent /> */}
-      {/*{render ? <UseEffectReturn /> : <div>UseEffectReturn got unmounted</div>} */}
-      <Todos />
+      {/* {render ? <UseEffectReturn /> : <div>UseEffectReturn got unmounted</div>} */}
+      {/* <Todos /> */}
+      <Profile />
     </>
   )
 }
