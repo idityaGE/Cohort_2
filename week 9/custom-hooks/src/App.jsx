@@ -7,6 +7,7 @@ import IsOnline from './components/IsOnline'
 import MousePosition from './components/MousePosition'
 import WinDimension from './components/WinDimension'
 import Timer from './components/Timer'
+import DebounceValue from './components/DebounceValue'
 
 
 function App() {
@@ -20,7 +21,8 @@ function App() {
       {/* <IsOnline /> */}
       {/* <MousePosition /> */}
       {/* <WinDimension /> */}
-      <Timer />
+      {/* <Timer /> */}
+      <DebounceValue />
     </>
   )
 }
