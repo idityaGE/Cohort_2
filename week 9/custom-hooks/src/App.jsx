@@ -3,28 +3,35 @@ import React from 'react'
 import './App.css'
 import Todos from './components/Todos'
 import { Profile } from './custom-hooks/DatafetchingHook'
+import IsOnline from './components/IsOnline'
+import MousePosition from './components/MousePosition'
+import WinDimension from './components/WinDimension'
+import Timer from './components/Timer'
+
 
 function App() {
-  const [render, setRender] = useState(true)
-  useEffect(() => {
-    setTimeout(() => {
-      setRender(false)
-    }, 5000)
-  }, [])
-
-
-
   return (
     <>
       {/* <MyComponent /> */}
       {/* <ClassComponent /> */}
       {/* {render ? <UseEffectReturn /> : <div>UseEffectReturn got unmounted</div>} */}
       {/* <Todos /> */}
-      <Profile />
+      {/* <Profile /> */}
+      {/* <IsOnline /> */}
+      {/* <MousePosition /> */}
+      {/* <WinDimension /> */}
+      <Timer />
     </>
   )
 }
 export default App
+
+
+
+
+
+
+
 
 // Functional Component
 // with hooks
