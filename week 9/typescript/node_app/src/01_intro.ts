@@ -201,3 +201,102 @@ function Identity<T>(arg:T):T{
 const idd = Identity<string>("576948");
 const idd1 = Identity<number>(576948);
 
+
+const array: number[] = [1, 2, 3, 4, 5];
+const array2: string[] = ["a", "b", "c", "d", "e"];
+function printArray<T>(arr: T[]): void {
+  arr.forEach((element) => {
+    console.log(element);
+  });
+} 
+printArray<number>(array);
+printArray<string>(array2);
+
+
+function print<T>(arg: T): T {
+  console.log(arg);
+  return arg;
+}
+let output = print<string>("Aditya");
+let output2 = print(21); //compiler to infer the type of the argument
+
+interface User23 {
+  name: string;
+  age: number;
+}
+let output3 = print<User23>({ name: "Aditya", age: 21 });
+
+type Product = {
+  name: string;
+  price: number;
+}
+let output4 = print<Product>({ name: "Laptop", price: 50000 });
+
+
+function print2<T, U>(arg1: T, arg2: U): void {
+  console.log(arg1, arg2);
+}
+print2<string, number>("Aditya", 21);
+print2("Aditya", 21); //compiler to infer the type of the argument
+
+//arrow function
+const getProducts = <T>(products: T[]): T[] => {
+  return products;
+}
+
+function getVal<T extends number, U>(valOne: T, valTwo: U): object {
+  return {
+    valOne,
+    valTwo
+  };
+}
+// console.log(getVal("Aditya",21)); //error because T should be a number
+console.log(getVal(21, "Aditya")); //we also add constraint on U also 
+
+
+interface db {
+  connection: string;
+  username: string;
+  password: string;
+}
+function getDb<T, U extends db>(arg1: T, arg2: U): object {
+  console.log(arg2.connection);
+  return {
+    arg1,
+    arg2
+  };
+}
+let connectioStatus = getDb("Aditya", { connection: "localhost", username: "root", password: "root" });
+console.log(connectioStatus); //{ arg1: 'Aditya', arg2: { connection: 'localhost', username: 'root', password: 'root' } }
+
+
+
+//generic with classes
+interface Quiz {
+  name: string,
+  type: string
+}
+interface Couse {
+  name: string,
+  author: string,
+  subject: string,
+  price?: number
+}
+class Sellable<T> {
+  public cart: T[] = [];
+  constructor(cart: T[]) {
+    this.cart = cart;
+  }
+  addToCart(item: T): void {
+    this.cart.push(item);
+  }
+}
+let quiz = new Sellable<Quiz>([{ name: "Quiz1", type: "MCQ" }]);
+quiz.addToCart({ name: "Quiz2", type: "MCQ" });
+console.log(quiz.cart); //[ { name: 'Quiz1', type: 'MCQ' }, { name: 'Quiz2', type: 'MCQ' } ]
+
+let course = new Sellable<Couse>([{ name: "Course1", author: "Aditya", subject: "TS", price: 1000 }]);
+course.addToCart({ name: "Course2", author: "Aditya", subject: "TS" });
+console.log(course);  //Sellable { cart: [ { name: 'Course1', author: 'Aditya', subject: 'TS', price: 1000 }, { name: 'Course2', author: 'Aditya', subject: 'TS' } ] }
+
+
