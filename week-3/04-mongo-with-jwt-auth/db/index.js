@@ -20,7 +20,7 @@ const UserSchema = new mongoose.Schema({
     // Schema definition here
     username: { type: String, required: true },
     password: { type: String, required: true },
-    purchasedCourses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Course' }]
+    purchasedCourses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Course' }]  // Array of course ids // syntax: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Model' }]
 });
 
 const CourseSchema = new mongoose.Schema({
@@ -31,7 +31,7 @@ const CourseSchema = new mongoose.Schema({
     imageLink: { type: String },
 });
 
-const Admin = mongoose.model('Admin', AdminSchema);
+const Admin = mongoose.model('Admin', AdminSchema);  // syntax: const Model = mongoose.model('Model', schema);
 const User = mongoose.model('User', UserSchema);
 const Course = mongoose.model('Course', CourseSchema);
 
