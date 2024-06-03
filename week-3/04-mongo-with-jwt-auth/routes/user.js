@@ -16,7 +16,6 @@ router.post('/signup', async (req, res) => {
     try {
         await User.create({ username, password });
         res.status(201).json({ message: 'User created successfully' });
-
     } catch (error) {
         return res.status(500).send({ message: "Error creating user account", error: error });
     }
@@ -29,8 +28,7 @@ router.post('/signin', async (req, res) => {
         return res.status(401).json({ message: "All field are requied" });
     }
     try {
-        const user = await User
-            .findOne({ username, password });
+        const user = await User.findOne({ username, password });
         if (!user) {
             return res.status(401).json({ message: "Invalid credentials" });
         }
