@@ -1,11 +1,11 @@
 import express from 'express';
 import { userRouter } from './routes/user-router/user';
 import { todoRouter } from './routes/todo-router/todo';
+import bodypasrser from 'body-parser';
 
 const app = express();
 
-
-app.use(express.json());
+app.use(bodypasrser.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/user', userRouter);

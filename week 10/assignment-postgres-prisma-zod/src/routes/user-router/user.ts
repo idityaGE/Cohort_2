@@ -48,3 +48,28 @@ userRouter.post("/signup", async (req:Request, res: Response) => {
     await prisma.$disconnect();
   }
 })
+
+userRouter.post("/signin", async (req:Request, res: Response) => {
+  const { username, password } = req.body;
+  const { success, data, error } = signinSchema.safeParse(req.body);
+  if (!success) {
+    return res.status(400).json({ error: error.errors });
+  }
+  const prisma = new PrismaClient();
+  try {
+    const user = await prisma.user.findUnique({ where: { username } });
+    if (!user) {
+      return res.status(400).json({ error: "User not found" });
+    }
+    const isMatch = await bcrypt.compare(password, user.password_hash);
+    if (!isMatch) {
+      return res.status(400).json({ error: "Invalid password" });
+    }
+    const token = jwt.sign({ username }, jwtPass, { expiresIn: '1h' });  // we use this token to save in user's browser local storage
+    res.status(200).json({ token, user });
+  } catch (error) {
+    return res.status(500).json({ error: "Unable to sign in" });
+  } finally {
+    await prisma.$disconnect();
+  }
+})
