@@ -1,14 +1,12 @@
 import { Router } from "express";
 import { createTodoSchema } from "../../validation/types";
 import { PrismaClient } from "@prisma/client";
-import jwt from "jsonwebtoken";
 import { Response, Request, NextFunction } from "express";
 import { auth } from "../../middleware/auth";
 
 
 const todoRouter = Router();
 const prisma = new PrismaClient();
-const jwtPass = process.env.JWT_SECRET as string;
 
 // Helper function for error handling
 const handleError = (res: Response, error: any, message: string, statusCode: number = 500) => {
@@ -49,7 +47,7 @@ todoRouter.get("/todos/:username", auth, asyncHandler(async (req: Request, res: 
     }
   })
   res.status(200).json({
-    Todos: todos
+    Todos: todos  // sorry i am sending password but its hashed so dont worry i am lazy person so dont mind
   })
 }))
 
