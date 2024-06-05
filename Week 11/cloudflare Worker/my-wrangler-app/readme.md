@@ -1,5 +1,7 @@
 ## How to deploy on cloudflare workers
 
+[Check this](https://projects.100xdevs.com/tracks/eooSv7lnuwBO6wl9YA5w/serverless-1)
+
 1. Initialize a worker
 
 ```bash
@@ -57,3 +59,9 @@ npx wrangler publish
 5. then go to trigger and there you will found and endpoint(link) of your deployed application
 
 [link](https://my-wrangler-app.am44910606.workers.dev/)
+
+
+### This method of using cloudflare workers is very hard and time consuming. So, Its better to use different library that support cloudfare architecture and make it easy to deploy on cloudflare workers.
+> [Hono](https://hono.dev/)
+
+> [checkout this post for more information](https://community.cloudflare.com/t/express-support-for-workers/390844)
