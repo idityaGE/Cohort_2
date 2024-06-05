@@ -55,3 +55,5 @@ npx wrangler publish
 3. Now go to the cloudflare dashboard and check the worker
 4. Go to setting of your deployed worker
 5. then go to trigger and there you will found and endpoint(link) of your deployed application
+
+[link](https://my-wrangler-app.am44910606.workers.dev/)
