@@ -114,7 +114,7 @@ npx wrangler whoami
 npm run deploy
 ```
 
-> **[See My App HERE](https://cloudflare-app.chandan7979ck.workers.dev/)**
+> **[See My App HERE]([https://cloudflare-app.chandan7979ck.workers.dev/](https://my-wrangler-app.am44910606.workers.dev/))**
 
 
 ## What is [Hono](https://hono.dev/concepts/motivation) ? 
@@ -173,7 +173,7 @@ export default app
 ```
 npm run deploy
 ```
-> Here is the [Link](https://hono-app.chandan7979ck.workers.dev/)
+> Here is the [Link](https://hono-app.am44910606.workers.dev/)
 
 
 ### Recap
