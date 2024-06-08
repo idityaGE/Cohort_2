@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { createTodoSchema } from "../../validation/types";
 import { PrismaClient } from "@prisma/client";
 import { Response, Request, NextFunction } from "express";
 import { auth } from "../../middleware/auth";
+import { createTodoSchema } from "@idityage/input-validation";
 
 
 const todoRouter = Router();

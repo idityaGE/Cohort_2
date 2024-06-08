@@ -1,9 +1,9 @@
 import { Router } from "express";
 import { Request, Response, NextFunction } from "express";
-import { signupSchema, signinSchema } from "../../validation/types";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from 'bcrypt';
 import jwt from "jsonwebtoken";
+import { signupSchema, signinSchema } from "@idityage/input-validation"
 
 const userRouter = Router();
 const prisma = new PrismaClient();

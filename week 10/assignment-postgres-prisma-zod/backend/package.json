@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@idityage/input-validation": "^1.0.4",
     "@prisma/client": "^5.14.0",
     "@types/bcrypt": "^5.0.2",
     "@types/express": "^4.17.21",
