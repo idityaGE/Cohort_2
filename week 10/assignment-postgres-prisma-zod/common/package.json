@@ -1,6 +1,6 @@
 {
-  "name": "@idityage/common",
-  "version": "1.0.0",
+  "name": "@idityage/input-validation",
+  "version": "1.0.4",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
