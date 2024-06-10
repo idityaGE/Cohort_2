@@ -18,7 +18,7 @@ model User {
   email     String   @unique
   name      String?
   createdAt DateTime @default(now())
-  posts     Post[] // Relation to the Post model
+  posts     Post[]   // Relation to the Post model
 }
 
 model Post {
@@ -28,5 +28,5 @@ model Post {
   published Boolean  @default(false)
   createdAt DateTime @default(now())
   author    User     @relation(fields: [authorId], references: [id]) // Relation to the User model
-  authorId  Int // Foreign key to the User model
+  authorId  Int      // Foreign key to the User model
 }
