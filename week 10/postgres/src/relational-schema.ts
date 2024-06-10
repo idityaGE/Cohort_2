@@ -31,9 +31,9 @@ async function createAddressesTable() {
             street VARCHAR(255) NOT NULL,
             pincode VARCHAR(20),
             created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-            FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
-        );
-    `);
+            FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE 
+        ); 
+    `);// ON DELETE CASCADE --> if user is deleted then address will also be deleted which is associated with that user
   console.log(result);
 }
 

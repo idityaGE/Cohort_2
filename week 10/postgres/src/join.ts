@@ -1,6 +1,6 @@
 /* 
 
-Bad Approch -->
+! Bad Approch -->
 
 -- Query 1: Fetch user's details
 SELECT id, username, email
@@ -13,7 +13,7 @@ FROM addresses
 WHERE user_id = YOUR_USER_ID;
 
 
-Using JOIN -->
+! Using JOIN -->
 
 SELECT u.id, u.username, u.email, a.city, a.country, a.street, a.pincode
 FROM users u
