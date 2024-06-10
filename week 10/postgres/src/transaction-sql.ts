@@ -14,6 +14,10 @@ VALUES (currval('users_id_seq'), 'New York', 'USA', '123 Broadway St', '10001');
 
 COMMIT;
 
+error--> ROLLBACK;
+
+finally--> END;
+
 */
 
 
