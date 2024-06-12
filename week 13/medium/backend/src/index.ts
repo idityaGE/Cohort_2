@@ -17,6 +17,7 @@ app.use("/*", async (c, next) => {
   c.set("prisma", prisma as any);
   await next()
 });
+
 app.use("/blog/*", async (c, next) => {
   const jwt = c.req.header('Authorization')
   if (!jwt) {

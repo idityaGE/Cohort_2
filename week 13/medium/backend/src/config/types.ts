@@ -1,3 +1,5 @@
+import { PrismaClient } from '@prisma/client'
+
 export type Environment = {
   Bindings: {
     JWT_SECRET: string
