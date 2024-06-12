@@ -1,19 +1,10 @@
 import { Hono } from 'hono'
 import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
-import { sign, verify } from 'hono/jwt'
-
-
-type Environment = {
-  Bindings: {
-    JWT_SECRET: string
-    DATABASE_URL: string
-  },
-  Variables: {
-    userId: string
-    prisma: PrismaClient
-  }
-}
+import { verify } from 'hono/jwt'
+import user from './routes/user'
+import blog from './routes/blog'
+import { Environment } from './config/types'
 
 const app = new Hono<Environment>().basePath('/api/v1')
 
@@ -47,69 +38,7 @@ app.use("/blog/*", async (c, next) => {
   }
 })
 
-
-//! Blog Routes
-app.post('/blog', async (c) => { })
-app.put('/blog', async (c) => { })
-app.get('/blog/:id', async (c) => { })
-app.get('/blog/bulk', async (c) => { })
-
-
-const user = new Hono<Environment>().basePath('/user')
-
-//! Signup Route
-user.post('/signup', async (c) => {
-  const prisma = c.get('prisma') as PrismaClient
-  try {
-    const { email, password, name } = await c.req.json()
-    const user = await prisma.user.create({
-      data: {
-        email,
-        password,
-        name,
-      },
-    })
-    const token = await sign({ id: user.id }, c.env.JWT_SECRET)
-    return c.json({ token })
-  } catch (error) {
-    c.status(500)
-    return c.json({
-      msg: "error while signup",
-      error: (error as Error).message
-    })
-  } finally {
-    await prisma.$disconnect()
-  }
-})
-
-//! Signin Route
-user.post('/signin', async (c) => {
-  const prisma = c.get('prisma') as PrismaClient
-  try {
-    const { email, password } = await c.req.json()
-    const user = await prisma.user.findFirst({
-      where: {
-        email,
-        password
-      },
-    })
-    if (!user) {
-      c.status(401)
-      return c.json({ msg: 'Invalid credentials' })
-    }
-    const token = await sign({ id: user.id }, c.env.JWT_SECRET)
-    return c.json({ token })
-  } catch (error) {
-    c.status(500)
-    return c.json({
-      msg: "error while signin",
-      error: (error as Error).message
-    })
-  } finally {
-    await prisma.$disconnect()
-  }
-})
-
+app.route('/', blog)
 app.route('/', user)
 
 export default app
