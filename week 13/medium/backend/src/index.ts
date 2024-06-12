@@ -4,25 +4,28 @@ import { withAccelerate } from '@prisma/extension-accelerate'
 import { sign, verify } from 'hono/jwt'
 
 
-type Bindings = {
-  JWT_SECRET: string
-  DATABASE_URL: string
-}
-type Variables = {
-  userId: string
-  prisma: PrismaClient;
+type Environment = {
+  Bindings: {
+    JWT_SECRET: string
+    DATABASE_URL: string
+  },
+  Variables: {
+    userId: string
+    prisma: PrismaClient
+  }
 }
 
-const app = new Hono<{ Bindings: Bindings, Variables: Variables }>().basePath('/api/v1')
+const app = new Hono<Environment>().basePath('/api/v1')
 
+//! Middlewares
 app.use("/*", async (c, next) => {
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
-  }).$extends(withAccelerate());
-  c.set("prisma", prisma as unknown as PrismaClient);
-  await next();
+    log: ['query', 'info', 'warn'],
+  }).$extends(withAccelerate())
+  c.set("prisma", prisma as any);
+  await next()
 });
-
 app.use("/blog/*", async (c, next) => {
   const jwt = c.req.header('Authorization')
   if (!jwt) {
@@ -45,20 +48,18 @@ app.use("/blog/*", async (c, next) => {
 })
 
 
+//! Blog Routes
 app.post('/blog', async (c) => { })
 app.put('/blog', async (c) => { })
 app.get('/blog/:id', async (c) => { })
 app.get('/blog/bulk', async (c) => { })
 
 
-const user = new Hono<{ Bindings: Bindings }>().basePath('/user')
+const user = new Hono<Environment>().basePath('/user')
 
 //! Signup Route
 user.post('/signup', async (c) => {
-  const prisma = new PrismaClient({
-    datasourceUrl: c.env.DATABASE_URL,
-    log: ['query', 'info', 'warn'],
-  }).$extends(withAccelerate())
+  const prisma = c.get('prisma') as PrismaClient
   try {
     const { email, password, name } = await c.req.json()
     const user = await prisma.user.create({
@@ -83,10 +84,7 @@ user.post('/signup', async (c) => {
 
 //! Signin Route
 user.post('/signin', async (c) => {
-  const prisma = new PrismaClient({
-    datasourceUrl: c.env.DATABASE_URL,
-    log: ['query', 'info', 'warn'],
-  }).$extends(withAccelerate())
+  const prisma = c.get('prisma') as PrismaClient
   try {
     const { email, password } = await c.req.json()
     const user = await prisma.user.findFirst({
