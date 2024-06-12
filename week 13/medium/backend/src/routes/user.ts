@@ -1,7 +1,7 @@
 import { Hono } from "hono"
 import { sign } from "hono/jwt"
 import { Environment } from '../config/types'
-import { PrismaClient } from "@prisma/client"
+import { PrismaClient } from "@prisma/client/edge"
 
 
 const user = new Hono<Environment>().basePath('/user')
@@ -25,8 +25,6 @@ user.post('/signup', async (c) => {
       msg: "error while signup",
       error: (error as Error).message
     })
-  } finally {
-    await prisma.$disconnect()
   }
 })
 
@@ -53,8 +51,6 @@ user.post('/signin', async (c) => {
       msg: "error while signin",
       error: (error as Error).message
     })
-  } finally {
-    await prisma.$disconnect()
   }
 })
 
