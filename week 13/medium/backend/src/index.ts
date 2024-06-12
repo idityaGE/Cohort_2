@@ -6,7 +6,7 @@ import { sign, verify } from 'hono/jwt'
 
 type Bindings = {
   JWT_SECRET: string
-  DIRECT_URL: string
+  DATABASE_URL: string
 }
 type Variables = {
   userId: string
@@ -17,7 +17,7 @@ const app = new Hono<{ Bindings: Bindings, Variables: Variables }>().basePath('/
 
 app.use("/*", async (c, next) => {
   const prisma = new PrismaClient({
-    datasourceUrl: c.env.DIRECT_URL,
+    datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate());
   c.set("prisma", prisma as unknown as PrismaClient);
   await next();
@@ -56,7 +56,7 @@ const user = new Hono<{ Bindings: Bindings }>().basePath('/user')
 //! Signup Route
 user.post('/signup', async (c) => {
   const prisma = new PrismaClient({
-    datasourceUrl: c.env.DIRECT_URL,
+    datasourceUrl: c.env.DATABASE_URL,
     log: ['query', 'info', 'warn'],
   }).$extends(withAccelerate())
   try {
@@ -84,7 +84,7 @@ user.post('/signup', async (c) => {
 //! Signin Route
 user.post('/signin', async (c) => {
   const prisma = new PrismaClient({
-    datasourceUrl: c.env.DIRECT_URL,
+    datasourceUrl: c.env.DATABASE_URL,
     log: ['query', 'info', 'warn'],
   }).$extends(withAccelerate())
   try {
