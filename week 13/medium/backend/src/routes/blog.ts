@@ -14,7 +14,7 @@ blog.post('/', async (c) => {
     const post = await prisma.post.create({
       data: {
         title: body.title,
-        content: body.body,
+        content: body.content,
         authorId: userId
       }
     })
