@@ -49,10 +49,10 @@
   resolved "https://registry.npmjs.org/@fastify/busboy/-/busboy-2.1.1.tgz"
   integrity sha512-vBZP4NlzfOlerQTnba4aqZoMhE/a9HY7HRqoOPaETQcSQuWEIyZMHGfVu6w9wGtGK5fED5qRs2DteVCjOH60sA==
 
-"@idityage/medium-types@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.npmjs.org/@idityage/medium-types/-/medium-types-1.0.2.tgz"
-  integrity sha512-4Lm1s+sqmy89/l15S14nG8O2qdXNtsZxWLzyZV5NM/Mq9Oxn3UEb+mH7xGzG+ExFq9ve8rNNX7oJKZsxeUhtcQ==
+"@idityage/medium-types@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.npmjs.org/@idityage/medium-types/-/medium-types-1.0.3.tgz"
+  integrity sha512-6WPSFUM4o2gyAkImkTVrrEWWJzLqB+h+ND2UKB86RBCqvAv62Rmsqo6Opq7URxAYLUj1hsbGxqcHlYV8QLNMtA==
   dependencies:
     zod "^3.23.8"
 

@@ -1,5 +1,6 @@
 import { Hono } from 'hono'
-import { Environment } from '../config/types'
+import { Environment } from '../config/envirorment'
+import { createPostSchema, updatePostSchema } from '@idityage/medium-types/dist/types'
 
 
 
@@ -11,6 +12,14 @@ blog.post('/', async (c) => {
   const userId = c.get('userId') as string
   try {
     const body = await c.req.json()
+    const { success, error } = createPostSchema.safeParse(body)
+    if (!success) {
+      c.status(400)
+      return c.json({
+        msg: 'invalid post data',
+        error: error
+      })
+    }
     const post = await prisma.post.create({
       data: {
         title: body.title,
@@ -33,15 +42,14 @@ blog.put('/:id', async (c) => {
   const userId = c.get('userId') as string
   try {
     const body = await c.req.json()
-    const { success, error } = signupSchema.safeParse(body)
+    const { success, error } = updatePostSchema.safeParse(body)
     if (!success) {
       c.status(400)
       return c.json({
-        msg: 'invalid request body',
+        msg: 'invalid post data',
         error: error
       })
     }
-    console.log(body)
     const post = await prisma.post.update({
       where: {
         id: c.req.param('id'),

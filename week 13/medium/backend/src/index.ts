@@ -4,7 +4,7 @@ import { withAccelerate } from '@prisma/extension-accelerate'
 import { verify } from 'hono/jwt'
 import user from './routes/user'
 import blog from './routes/blog'
-import { Environment } from './config/types'
+import { Environment } from './config/envirorment'
 
 const app = new Hono<Environment>().basePath('/api/v1')
 

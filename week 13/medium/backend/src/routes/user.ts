@@ -1,9 +1,8 @@
 import { Hono } from "hono"
 import { sign } from "hono/jwt"
-import { Environment } from '../config/types'
+import { Environment } from '../config/envirorment'
 import { PrismaClient } from "@prisma/client/edge"
-import { signupSchema, signinSchema } from "@idityage/medium-types"
-
+import { signupSchema, signinSchema } from "@idityage/medium-types/dist/types"
 
 const user = new Hono<Environment>().basePath('/user')
 //! Signup Route
