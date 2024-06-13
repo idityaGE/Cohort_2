@@ -33,6 +33,7 @@ blog.put('/', async (c) => {
   const userId = c.get('userId') as string
   try {
     const body = await c.req.json()
+    console.log(body)
     const post = await prisma.post.update({
       where: {
         id: body.id,
@@ -41,7 +42,6 @@ blog.put('/', async (c) => {
       data: {
         title: body.title || undefined,
         content: body.content || undefined,
-        published: body.published || undefined
       }
     })
     return c.json(post)
@@ -74,7 +74,6 @@ blog.get('/get/:id', async (c) => {
 
 blog.get('/bulk', async (c) => {
   const userId = c.get('userId') as string
-  console.log(userId)
   const prisma = c.get('prisma')
   try {
     const posts = await prisma.post.findMany({
@@ -87,6 +86,55 @@ blog.get('/bulk', async (c) => {
     c.status(500)
     return c.json({
       msg: 'error while fetching posts',
+      error: (error as Error).message
+    })
+  }
+})
+
+blog.delete('/delete/:id', async (c) => {
+  const prisma = c.get('prisma')
+  const userId = c.get('userId') as string
+  try {
+    const post = await prisma.post.delete({
+      where: {
+        id: c.req.param('id'),
+      }
+    })
+    return c.json({
+      msg: 'post deleted',
+    })
+  } catch (error) {
+    c.status(500)
+    return c.json({
+      msg: 'error while deleting post',
+      error: (error as Error).message
+    })
+  }
+})
+
+blog.put('/publish/:id', async (c) => {
+  const prisma = c.get('prisma')
+  const userId = c.get('userId') as string
+  try {
+    const post = await prisma.post.findUnique({
+      where: {
+        id: c.req.param('id')
+      }
+    })
+    const updatedPost = await prisma.post.update({
+      where: {
+        id: c.req.param('id'),
+        authorId: userId
+      },
+      data: {
+        published: !post?.published
+      }
+    })
+    return c.json(updatedPost)
+  } catch (error) {
+    c.status(500)
+    return c.json({
+      msg: 'error while publishing post',
       error: (error as Error).message
     })
   }
