@@ -40,7 +40,7 @@ blog.put('/', async (c) => {
       },
       data: {
         title: body.title,
-        content: body.body,
+        content: body.content,
       }
     })
     return c.json(post)
@@ -53,7 +53,7 @@ blog.put('/', async (c) => {
   }
 })
 
-blog.get('/:id', async (c) => {
+blog.get('/get/:id', async (c) => {
   const prisma = c.get('prisma')
   try {
     const post = await prisma.post.findUnique({
@@ -72,9 +72,15 @@ blog.get('/:id', async (c) => {
 })
 
 blog.get('/bulk', async (c) => {
+  const userId = c.get('userId') as string
+  console.log(userId)
   const prisma = c.get('prisma')
   try {
-    const posts = await prisma.post.findMany()
+    const posts = await prisma.post.findMany({
+      where: {
+        authorId: userId
+      }
+    })
     return c.json(posts)
   } catch (error) {
     c.status(500)
