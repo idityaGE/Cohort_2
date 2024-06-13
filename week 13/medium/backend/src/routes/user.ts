@@ -2,6 +2,7 @@ import { Hono } from "hono"
 import { sign } from "hono/jwt"
 import { Environment } from '../config/types'
 import { PrismaClient } from "@prisma/client/edge"
+import { signupSchema, signinSchema } from "@idityage/medium-types"
 
 
 const user = new Hono<Environment>().basePath('/user')
@@ -9,12 +10,20 @@ const user = new Hono<Environment>().basePath('/user')
 user.post('/signup', async (c) => {
   const prisma = c.get('prisma') as PrismaClient
   try {
-    const { email, password, name } = await c.req.json()
+    const body = await c.req.json()
+    const { success, error } = signupSchema.safeParse(body)
+    if (!success) {
+      c.status(400)
+      return c.json({
+        msg: 'invalid request body',
+        error: error
+      })
+    }
     const user = await prisma.user.create({
       data: {
-        email,
-        password,
-        name,
+        email: body.email,
+        password: body.password,
+        name: body.name || undefined,
       },
     })
     const token = await sign({ id: user.id }, c.env.JWT_SECRET)
@@ -32,11 +41,19 @@ user.post('/signup', async (c) => {
 user.post('/signin', async (c) => {
   const prisma = c.get('prisma') as PrismaClient
   try {
-    const { email, password } = await c.req.json()
+    const body = await c.req.json()
+    const { success, error } = signinSchema.safeParse(body)
+    if (!success) {
+      c.status(400)
+      return c.json({
+        msg: 'invalid request body',
+        error: error
+      })
+    }
     const user = await prisma.user.findFirst({
       where: {
-        email,
-        password
+        email: body.email,
+        password: body.password
       },
     })
     if (!user) {

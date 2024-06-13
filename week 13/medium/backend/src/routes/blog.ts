@@ -28,15 +28,23 @@ blog.post('/', async (c) => {
   }
 })
 
-blog.put('/', async (c) => {
+blog.put('/:id', async (c) => {
   const prisma = c.get('prisma')
   const userId = c.get('userId') as string
   try {
     const body = await c.req.json()
+    const { success, error } = signupSchema.safeParse(body)
+    if (!success) {
+      c.status(400)
+      return c.json({
+        msg: 'invalid request body',
+        error: error
+      })
+    }
     console.log(body)
     const post = await prisma.post.update({
       where: {
-        id: body.id,
+        id: c.req.param('id'),
         authorId: userId
       },
       data: {
