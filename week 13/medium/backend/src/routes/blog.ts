@@ -95,9 +95,16 @@ blog.delete('/delete/:id', async (c) => {
   const prisma = c.get('prisma')
   const userId = c.get('userId') as string
   try {
-    const post = await prisma.post.delete({
+    const post = await prisma.user.update({
       where: {
-        id: c.req.param('id'),
+        id: userId
+      },
+      data: {
+        posts: {
+          deleteMany: {
+            id: c.req.param('id')
+          }
+        }
       }
     })
     return c.json({
