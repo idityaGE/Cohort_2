@@ -39,8 +39,9 @@ blog.put('/', async (c) => {
         authorId: userId
       },
       data: {
-        title: body.title,
-        content: body.content,
+        title: body.title || undefined,
+        content: body.content || undefined,
+        published: body.published || undefined
       }
     })
     return c.json(post)
