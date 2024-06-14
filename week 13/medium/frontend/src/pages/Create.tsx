@@ -3,7 +3,7 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import axios from "axios"
 import { BACKEND_URL } from "@/config"
 
@@ -38,14 +38,14 @@ export default function Create() {
           <span className="sr-only">Acme Blog</span>
         </Link>
         <nav className="ml-auto flex gap-4 sm:gap-6">
-          <Link to="#" className="text-sm font-medium hover:underline underline-offset-4">
+          <Link to="/blogs" className="text-sm font-medium hover:underline underline-offset-4" >
             Blog
           </Link>
-          <Link to="#" className="text-sm font-medium hover:underline underline-offset-4" >
+          <Link to="/" className="text-sm font-medium hover:underline underline-offset-4" >
             Home
           </Link>
-          <Link to="#" className="text-sm font-medium hover:underline underline-offset-4" >
-            Contact
+          <Link to="/signin" className="text-sm font-medium hover:underline underline-offset-4" onClick={(e) => localStorage.removeItem('jwt')}>
+            logout
           </Link>
         </nav>
       </header>

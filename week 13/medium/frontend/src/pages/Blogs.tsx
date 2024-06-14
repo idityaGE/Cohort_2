@@ -5,6 +5,7 @@ import axios from "axios"
 import { BACKEND_URL } from "@/config"
 import { useNavigate } from "react-router-dom"
 import { Button } from "@/components/ui/button"
+import { Link } from "react-router-dom"
 
 interface BlogPost {
   id: number
@@ -49,6 +50,23 @@ export default function Blogs() {
 
   return (
     <div className="w-full max-w-4xl mx-auto px-4 md:px-6 py-12 md:py-16">
+      <header className="px-4 lg:px-6 h-14 flex items-center border-b mb-6">
+        <Link to="#" className="flex items-center justify-center">
+          <MountainIcon className="size-6" />
+          <span className="sr-only">Acme Blog</span>
+        </Link>
+        <nav className="ml-auto flex gap-4 sm:gap-6">
+          <Link to="/blogs" className="text-sm font-medium hover:underline underline-offset-4" >
+            Blog
+          </Link>
+          <Link to="/" className="text-sm font-medium hover:underline underline-offset-4" >
+            Home
+          </Link>
+          <Link to="/signin" className="text-sm font-medium hover:underline underline-offset-4" onClick={(e) => localStorage.removeItem('jwt')}>
+            logout
+          </Link>
+        </nav>
+      </header>
       <div className="flex justify-center mb-8">
         <Tabs
           defaultValue="blog"
@@ -122,6 +140,25 @@ function PlusIcon(props: React.SVGProps<SVGSVGElement>) {
     >
       <path d="M5 12h14" />
       <path d="M12 5v14" />
+    </svg>
+  )
+}
+
+function MountainIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="m8 3 4 8 5-5 5 15H2L8 3z" />
     </svg>
   )
 }
