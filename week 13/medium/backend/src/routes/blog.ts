@@ -95,6 +95,17 @@ blog.get('/bulk', async (c) => {
     const posts = await prisma.post.findMany({
       where: {
         authorId: userId
+      },
+      select: {
+        id: true,
+        title: true,
+        content: true,
+        published: true,
+        author: {
+          select: {
+            name: true
+          }
+        }
       }
     })
     return c.json(posts)
@@ -113,6 +124,17 @@ blog.get('/all', async (c) => {
     const posts = await prisma.post.findMany({
       where: {
         published: true
+      },
+      select: {
+        id: true,
+        title: true,
+        content: true,
+        published: true,
+        author: {
+          select: {
+            name: true
+          }
+        }
       }
     })
     return c.json(posts)
