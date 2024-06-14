@@ -175,7 +175,7 @@ blog.delete('/delete/:id', async (c) => {
   }
 })
 
-blog.put('/publish/:id', async (c) => {
+blog.post('/publish/:id', async (c) => {
   const prisma = c.get('prisma')
   const userId = c.get('userId') as string
   try {

@@ -1,8 +1,46 @@
-import { Link } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import { AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogCancel, AlertDialogAction } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
+import { useEffect, useState } from "react"
+import axios from "axios"
+import { BACKEND_URL } from "@/config"
 
 export default function Blog() {
+  const navigator = useNavigate()
+  const location = useLocation()
+  const jwt = localStorage.getItem('jwt')
+  const id = location.pathname.split("/")[2]
+  const [blogPost, setBlogPost] = useState<any>({})
+  const handleClick = async (id: string) => {
+    try {
+      const post = await axios.get(`${BACKEND_URL}/blog/get/${id}`, { headers: { Authorization: `Bearer ${jwt}` } })
+      setBlogPost(post.data)
+    } catch (error) {
+      alert("An error occurred. Please try again.")
+    }
+  }
+  useEffect(() => {
+    handleClick(id)
+  }, [])
+
+  const handleDelete = async (id: string) => {
+    try {
+      await axios.delete(`${BACKEND_URL}/blog/delete/${id}`, { headers: { Authorization: `Bearer ${jwt}` } })
+      navigator('/blogs')
+    } catch (error) {
+      alert("An error occurred. Please try again.")
+    }
+  }
+
+  const handlePublish = async (id: string) => {
+    try {
+      await axios.post(`${BACKEND_URL}/blog/publish/${id}`, {}, { headers: { Authorization: `Bearer ${jwt}` } })
+      navigator('/blogs')
+    } catch (error) {
+      alert("An error occurred. Please try again.")
+    }
+  }
+
   return (
     <div className="flex flex-col min-h-[100dvh]">
       <header className="px-4 lg:px-6 h-14 flex items-center border-b">
@@ -11,14 +49,14 @@ export default function Blog() {
           <span className="sr-only">Acme Blog</span>
         </Link>
         <nav className="ml-auto flex gap-4 sm:gap-6">
-          <Link to="#" className="text-sm font-medium hover:underline underline-offset-4" >
+          <Link to="/blogs" className="text-sm font-medium hover:underline underline-offset-4" >
             Blog
           </Link>
-          <Link to="#" className="text-sm font-medium hover:underline underline-offset-4" >
-            About
+          <Link to="/" className="text-sm font-medium hover:underline underline-offset-4" >
+            Home
           </Link>
-          <Link to="#" className="text-sm font-medium hover:underline underline-offset-4" >
-            Contact
+          <Link to="/signin" className="text-sm font-medium hover:underline underline-offset-4" onClick={(e) => localStorage.removeItem('jwt')}>
+            logout
           </Link>
         </nav>
       </header>
@@ -27,23 +65,22 @@ export default function Blog() {
           <div className="max-w-3xl mx-auto space-y-6">
             <div className="space-y-6">
               <div>
-                <h2 className="text-2xl font-bold">My Awesome Blog Post</h2>
+                <h2 className="text-2xl font-bold">{blogPost.title}</h2>
                 <p className="text-gray-500 mt-2 dark:text-gray-400">
-                  This is the content of my awesome blog post. It's full of interesting and informative information that
-                  you should definitely read.
+                  {blogPost.content}
                 </p>
               </div>
               <div>
                 {" "}
                 <div className="flex justify-end gap-2">
                   <Link
-                    to="#"
-                    className="inline-flex items-center justify-center rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus:outline-none focus:ring-2 focus:ring-gray-950 focus:ring-offset-2 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus:ring-gray-300">
+                    to={`/update/${blogPost.id}`}
+                    className="inline-flex items-center justify-center rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus:outline-none focus:ring-2 focus:ring-gray-950 focus:ring-offset-2 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus:ring-gray-300" >
                     Update
                   </Link>
                   <Link
                     to="#"
-                    className="inline-flex items-center justify-center rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-green-50 shadow transition-colors hover:bg-green-900/90 focus:outline-none focus:ring-2 focus:ring-green-950 focus:ring-offset-2 dark:bg-green-50 dark:text-green-900 dark:hover:bg-green-50/90 dark:focus:ring-green-300">
+                    className="inline-flex items-center justify-center rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-green-50 shadow transition-colors hover:bg-green-900/90 focus:outline-none focus:ring-2 focus:ring-green-950 focus:ring-offset-2 dark:bg-green-50 dark:text-green-900 dark:hover:bg-green-50/90 dark:focus:ring-green-300" onClick={(e) => { handlePublish(blogPost.id) }}>
                     Publish
                   </Link>
                   <AlertDialog>
@@ -64,7 +101,7 @@ export default function Blog() {
                       </AlertDialogHeader>
                       <AlertDialogFooter>
                         <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction>Delete</AlertDialogAction>
+                        <AlertDialogAction onClick={(e) => { handleDelete(id) }}>Delete</AlertDialogAction>
                       </AlertDialogFooter>
                     </AlertDialogContent>
                   </AlertDialog>

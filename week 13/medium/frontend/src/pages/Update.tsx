@@ -1,10 +1,32 @@
-import { Link } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
+import { useEffect, useState } from "react"
+import axios from "axios"
+import { BACKEND_URL } from "@/config"
 
 export default function Update() {
+  const navigator = useNavigate()
+  const location = useLocation()
+  const [blogPost, setBlogPost] = useState<any>({})
+  const jwt = localStorage.getItem('jwt')
+  const id = location.pathname.split("/")[2]
+  const handleClick = async (id: string) => {
+    try {
+      const post = await axios.get(`${BACKEND_URL}/blog/get/${id}`, { headers: { Authorization: `Bearer ${jwt}` } })
+      setBlogPost(post.data)
+    } catch (error) {
+      alert("An error occurred. Please try again.")
+    }
+  }
+  useEffect(() => {
+    handleClick(id)
+  }, [])
+
+
+
   return (
     <div className="flex flex-col min-h-dvh">
       <header className="px-4 lg:px-6 h-14 flex items-center border-b">
@@ -34,7 +56,13 @@ export default function Update() {
             <form className="space-y-6">
               <div>
                 <Label htmlFor="title">Title</Label>
-                <Input id="title" type="text" placeholder="Enter a title for your post" className="mt-1" />
+                <Input
+                  id="title"
+                  type="text"
+                  placeholder="Enter a title for your post"
+                  className="mt-1"
+                  value={blogPost.title}
+                />
               </div>
               <div>
                 <Label htmlFor="content">Content</Label>
@@ -43,6 +71,7 @@ export default function Update() {
                   rows={10}
                   placeholder="Start writing your blog post content here..."
                   className="mt-1"
+                  value={blogPost.content}
                 />
               </div>
               <div className="flex justify-end">
@@ -69,7 +98,7 @@ export default function Update() {
   )
 }
 
-function MountainIcon(props : React.SVGProps<SVGSVGElement>) {
+function MountainIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}
