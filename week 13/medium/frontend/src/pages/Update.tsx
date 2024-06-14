@@ -51,7 +51,7 @@ export default function Update() {
           <Link to="/" className="text-sm font-medium hover:underline underline-offset-4" >
             Home
           </Link>
-          <Link to="/signin" className="text-sm font-medium hover:underline underline-offset-4" onClick={(e) => localStorage.removeItem('jwt')}>
+          <Link to="/signin" className="text-sm font-medium hover:underline underline-offset-4" onClick={() => localStorage.removeItem('jwt')}>
             logout
           </Link>
         </nav>

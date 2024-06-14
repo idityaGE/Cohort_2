@@ -62,7 +62,7 @@ export default function Blogs() {
           <Link to="/" className="text-sm font-medium hover:underline underline-offset-4" >
             Home
           </Link>
-          <Link to="/signin" className="text-sm font-medium hover:underline underline-offset-4" onClick={(e) => localStorage.removeItem('jwt')}>
+          <Link to="/signin" className="text-sm font-medium hover:underline underline-offset-4" onClick={() => localStorage.removeItem('jwt')}>
             logout
           </Link>
         </nav>
@@ -107,7 +107,7 @@ export default function Blogs() {
             {userPosts.map((item) => (
               <Card key={item.id} className="bg-white shadow-md rounded-lg overflow-hidden">
                 <CardHeader className="px-6 py-4">
-                  <CardTitle className="text-2xl font-bold cursor-pointer" onClick={(e) => navigate(`/blog/${item.id}`)}>
+                  <CardTitle className="text-2xl font-bold cursor-pointer" onClick={() => navigate(`/blog/${item.id}`)}>
                     {item.title}
                   </CardTitle>
                   <CardDescription>{item.author.name}</CardDescription>

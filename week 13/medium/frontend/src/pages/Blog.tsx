@@ -55,7 +55,7 @@ export default function Blog() {
           <Link to="/" className="text-sm font-medium hover:underline underline-offset-4" >
             Home
           </Link>
-          <Link to="/signin" className="text-sm font-medium hover:underline underline-offset-4" onClick={(e) => localStorage.removeItem('jwt')}>
+          <Link to="/signin" className="text-sm font-medium hover:underline underline-offset-4" onClick={() => localStorage.removeItem('jwt')}>
             logout
           </Link>
         </nav>
@@ -80,7 +80,7 @@ export default function Blog() {
                   </Link>
                   <Link
                     to="#"
-                    className="inline-flex items-center justify-center rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-green-50 shadow transition-colors hover:bg-green-900/90 focus:outline-none focus:ring-2 focus:ring-green-950 focus:ring-offset-2 dark:bg-green-50 dark:text-green-900 dark:hover:bg-green-50/90 dark:focus:ring-green-300" onClick={(e) => { handlePublish(blogPost.id) }}>
+                    className="inline-flex items-center justify-center rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-green-50 shadow transition-colors hover:bg-green-900/90 focus:outline-none focus:ring-2 focus:ring-green-950 focus:ring-offset-2 dark:bg-green-50 dark:text-green-900 dark:hover:bg-green-50/90 dark:focus:ring-green-300" onClick={() => { handlePublish(blogPost.id) }}>
                     Publish
                   </Link>
                   <AlertDialog>
@@ -101,7 +101,7 @@ export default function Blog() {
                       </AlertDialogHeader>
                       <AlertDialogFooter>
                         <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction onClick={(e) => { handleDelete(id) }}>Delete</AlertDialogAction>
+                        <AlertDialogAction onClick={() => { handleDelete(id) }}>Delete</AlertDialogAction>
                       </AlertDialogFooter>
                     </AlertDialogContent>
                   </AlertDialog>
