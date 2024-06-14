@@ -4,6 +4,7 @@ import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/com
 import axios from "axios"
 import { BACKEND_URL } from "@/config"
 import { useNavigate } from "react-router-dom"
+import { Button } from "@/components/ui/button"
 
 interface BlogPost {
   id: number
@@ -62,6 +63,10 @@ export default function Blogs() {
         </Tabs>
       </div>
       <div className="grid gap-8">
+        <Button className="flex w-96 items-center justify-center gap-2 rounded-md bg-gray-900 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-200 dark:focus:ring-gray-300" onClick={()=> navigate('/create')}>
+          <PlusIcon className="h-5 w-5" />
+          Create Post
+        </Button>
         {activeTab === "blog" && (
           <div className="grid gap-6">
             {blogPosts.map((item) => (
@@ -98,5 +103,25 @@ export default function Blogs() {
         )}
       </div>
     </div>
+  )
+}
+
+function PlusIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M5 12h14" />
+      <path d="M12 5v14" />
+    </svg>
   )
 }

@@ -1,10 +1,35 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
+import { useEffect, useState } from "react"
+import axios from "axios"
+import { BACKEND_URL } from "@/config"
+
+interface BlogPost {
+  title: string
+  content: string
+}
 
 export default function Create() {
+  const navigator = useNavigate()
+  const [blogPost, setBlogPost] = useState<BlogPost>({
+    title: "",
+    content: "",
+  })
+  const jwt = localStorage.getItem('jwt')
+
+  const handleCreate = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault()
+    try {
+      await axios.post(`${BACKEND_URL}/blog`, blogPost, { headers: { Authorization: `Bearer ${jwt}` } })
+      navigator('/blogs')
+    } catch (error) {
+      alert("An error occurred. Please try again.")
+    }
+  }
+
   return (
     <div className="flex flex-col min-h-dvh">
       <header className="px-4 lg:px-6 h-14 flex items-center border-b">
@@ -36,7 +61,13 @@ export default function Create() {
             <form className="space-y-6">
               <div>
                 <Label htmlFor="title">Title</Label>
-                <Input id="title" type="text" placeholder="Enter a title for your post" className="mt-1" />
+                <Input
+                  id="title"
+                  type="text"
+                  placeholder="Enter a title for your post"
+                  className="mt-1"
+                  onChange={(e) => setBlogPost((c) => ({ ...c, title: e.target.value }))}
+                />
               </div>
               <div>
                 <Label htmlFor="content">Content</Label>
@@ -45,10 +76,11 @@ export default function Create() {
                   rows={10}
                   placeholder="Start writing your blog post content here..."
                   className="mt-1"
+                  onChange={(e) => setBlogPost((c) => ({ ...c, content: e.target.value }))}
                 />
               </div>
               <div className="flex justify-end">
-                <Button type="submit" className="ml-auto">
+                <Button type="submit" className="ml-auto" onClick={handleCreate}>
                   Publish Post
                 </Button>
               </div>
