@@ -25,6 +25,16 @@ export default function Update() {
     handleClick(id)
   }, [])
 
+  const handleUpdate = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault()
+    try {
+      await axios.put(`${BACKEND_URL}/blog/${id}`, blogPost, { headers: { Authorization: `Bearer ${jwt}` } })
+      navigator('/blogs')
+    } catch (error) {
+      alert("An error occurred. Please try again.")
+    }
+  }
+
 
 
   return (
@@ -35,14 +45,14 @@ export default function Update() {
           <span className="sr-only">Acme Blog</span>
         </Link>
         <nav className="ml-auto flex gap-4 sm:gap-6">
-          <Link to="#" className="text-sm font-medium hover:underline underline-offset-4">
+          <Link to="/blogs" className="text-sm font-medium hover:underline underline-offset-4" >
             Blog
           </Link>
-          <Link to="#" className="text-sm font-medium hover:underline underline-offset-4">
-            About
+          <Link to="/" className="text-sm font-medium hover:underline underline-offset-4" >
+            Home
           </Link>
-          <Link to="#" className="text-sm font-medium hover:underline underline-offset-4">
-            Contact
+          <Link to="/signin" className="text-sm font-medium hover:underline underline-offset-4" onClick={(e) => localStorage.removeItem('jwt')}>
+            logout
           </Link>
         </nav>
       </header>
@@ -62,6 +72,7 @@ export default function Update() {
                   placeholder="Enter a title for your post"
                   className="mt-1"
                   value={blogPost.title}
+                  onChange={(e) => setBlogPost({ ...blogPost, title: e.target.value })}
                 />
               </div>
               <div>
@@ -72,10 +83,11 @@ export default function Update() {
                   placeholder="Start writing your blog post content here..."
                   className="mt-1"
                   value={blogPost.content}
+                  onChange={(e) => setBlogPost({ ...blogPost, content: e.target.value })}
                 />
               </div>
               <div className="flex justify-end">
-                <Button type="submit" className="ml-auto">
+                <Button type="submit" className="ml-auto" onClick={handleUpdate}>
                   Update Post
                 </Button>
               </div>
