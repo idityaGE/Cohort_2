@@ -107,6 +107,24 @@ blog.get('/bulk', async (c) => {
   }
 })
 
+blog.get('/all', async (c) => {
+  const prisma = c.get('prisma')
+  try {
+    const posts = await prisma.post.findMany({
+      where: {
+        published: true
+      }
+    })
+    return c.json(posts)
+  } catch (error) {
+    c.status(500)
+    return c.json({
+      msg: 'error while fetching posts',
+      error: (error as Error).message
+    })
+  }
+})
+
 blog.delete('/delete/:id', async (c) => {
   const prisma = c.get('prisma')
   const userId = c.get('userId') as string
