@@ -1,6 +1,6 @@
 import { Hono } from 'hono'
 import { Environment } from '../config/envirorment'
-import { createPostSchema, updatePostSchema } from '@idityage/medium-types/dist/types'
+import { createPostSchema, updatePostSchema } from '@idityage/medium-types'
 
 
 

@@ -4,7 +4,7 @@
     "deploy": "wrangler deploy --minify src/index.ts"
   },
   "dependencies": {
-    "@idityage/medium-types": "^1.0.3",
+    "@idityage/medium-types": "^1.0.4",
     "@prisma/client": "^5.15.0",
     "@prisma/extension-accelerate": "^1.1.0",
     "hono": "^4.4.4"
