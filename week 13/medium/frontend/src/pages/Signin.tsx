@@ -1,15 +1,31 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import { SigninSchema } from "@idityage/medium-types"
+import axios from "axios"
+import { BACKEND_URL } from "@/config"
 
 export default function Component() {
+  const navigate = useNavigate()
+
   const [signinInput, setSigninInput] = useState<SigninSchema>({
     email: "",
     password: "",
   })
+
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault()
+    try {
+      const response = await axios.post(`${BACKEND_URL}/user/signin`, signinInput)
+      const jwt = response.data.token
+      localStorage.setItem("jwt", jwt)
+      navigate("/blogs")
+    } catch (error) {
+      alert("An error occurred. Please try again.")
+    }
+  }
   return (
     <div className="w-full gap-10 lg:grid lg:min-h-[600px] lg:grid-cols-2 lg:gap-0 xl:min-h-[800px]">
       <div className="flex items-center justify-center p-6 xl:p-10">
@@ -36,7 +52,7 @@ export default function Component() {
                 setSigninInput((c) => ({ ...c, password: e.target.value }))
               }} />
             </div>
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full" onClick={handleSubmit}>
               Sign in
             </Button>
           </div>

@@ -5,10 +5,14 @@ import { verify } from 'hono/jwt'
 import user from './routes/user'
 import blog from './routes/blog'
 import { Environment } from './config/envirorment'
+import { cors } from 'hono/cors'
+
 
 const app = new Hono<Environment>().basePath('/api/v1')
 
 //! Middlewares
+app.use('/*', cors())
+
 app.use("/*", async (c, next) => {
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
