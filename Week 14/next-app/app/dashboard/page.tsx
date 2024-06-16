@@ -1,3 +1,4 @@
+import { title } from "process"
 import Linechart from "./line-chart"
 
 export function Page() {
@@ -11,6 +12,12 @@ export function Page() {
 }
 
 // In nextjs, inside page.tsx file only 'export default' is rendered on the browser
+
+export const metadata = {
+  title : "Dashboard",
+}
+
+
 
 export default function page() {
   return (
