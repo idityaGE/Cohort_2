@@ -1,3 +1,5 @@
+'use client'
+
 import { notFound } from "next/navigation"
 
 const getRandomInt = (max:number) => {
@@ -10,7 +12,7 @@ const page = ({params}:{
     reviewId:string
   }
 }) => {
-  const random = getRandomInt(2)
+  const random = getRandomInt(5)
   if (random === 1) {
     throw new Error('Random Error Occured')
   }
