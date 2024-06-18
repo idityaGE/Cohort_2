@@ -1,4 +1,3 @@
-import { title } from "process"
 import Linechart from "./line-chart"
 
 export function Page() {
