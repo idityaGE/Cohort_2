@@ -1,0 +1,25 @@
+version: "3.8"
+services:
+  db:
+    image: mongo
+    container_name: mongo_node_app
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_vol:/data/db
+  
+  app:
+    build: .
+    container_name: node_app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      - MONGO_URI=mongodb://mongo_node_app:27017/myDatabase
+    volumes:
+      - .:/app #bind mount
+volumes:
+  mongo_vol:
+
+
