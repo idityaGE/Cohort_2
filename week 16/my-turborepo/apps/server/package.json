@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "tsc -b &&  node ./dist/index.js --turbo",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "esbuild src/index.ts --platform=node --bundle --outdir=dist"
   },
   "keywords": [],
   "author": "",
