@@ -1,4 +1,5 @@
 import express from 'express';
+import { msg } from '@repo/common'
 
 const app = express();
 
@@ -9,5 +10,5 @@ app.listen(port, () => {
 });
 
 app.get('/', (req, res) => {
-  res.send('Server is running');
+  res.json({ msg });
 })
