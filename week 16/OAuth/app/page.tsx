@@ -1,6 +1,7 @@
 import { Appbar } from "@/components/Appbar";
 import { NEXT_AUTH_CONFIG } from "@/lib/auth";
 import { getServerSession } from "next-auth"
+import { signIn } from "next-auth/react";
 
 async function getUser() {
   const session = await getServerSession(NEXT_AUTH_CONFIG);
@@ -13,7 +14,6 @@ export default async function Home() {
   return (
     <div>
       <Appbar />
-      User Detais
       {JSON.stringify(session)}
     </div>
   );

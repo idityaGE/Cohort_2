@@ -9,7 +9,8 @@ export const NEXT_AUTH_CONFIG = {
             password: { label: 'password', type: 'password', placeholder: '' },
           },
           async authorize(credentials: any) {
-  
+              // Database queary
+              // return data
               return {
                   id: "user1",
                   name: "asd",
