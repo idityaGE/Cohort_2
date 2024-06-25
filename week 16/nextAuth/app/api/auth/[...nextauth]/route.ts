@@ -11,7 +11,7 @@ const handler = NextAuth({
         password: { label: "Password", placeholder: "**********", type: "password" }
       },
       async authorize(credentials: any) {
-        console.log(credentials)
+        // console.log(credentials)
         return {
           id: "1",
           credentials: credentials?.username
@@ -19,8 +19,13 @@ const handler = NextAuth({
       }
     })
   ],
-  secret: process.env.NEXTAUTH_SECRET
+  secret: process.env.NEXTAUTH_SECRET,
+  callbacks: {
+    async jwt({ token, account, profile }) {
+      console.log({token: token, account: account, profile: profile})
+      return token
+    }
+  }
 })
 
-export const GET = handler;
-export const POST = handler;
+export { handler as GET, handler as POST }
