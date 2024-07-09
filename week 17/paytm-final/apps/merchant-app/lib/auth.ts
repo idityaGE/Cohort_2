@@ -15,7 +15,7 @@ export const authOptions = {
           name: string
         },
         account: {
-          provider: "google" | "github"
+          provider: "Google" | "Github"
         }
       }) {
         console.log("hi signin")
@@ -33,11 +33,11 @@ export const authOptions = {
           create: {
             email: user.email,
             name: user.name,
-            auth_type: account.provider === "google" ? "Google" : "Github" // Use a prisma type here
+            auth_type: account.provider === "Google" ? "Google" : "Github" // Use a prisma type here
           },
           update: {
             name: user.name,
-            auth_type: account.provider === "google" ? "Google" : "Github" // Use a prisma type here
+            auth_type: account.provider === "Google" ? "Google" : "Github" // Use a prisma type here
           }
         });
 
