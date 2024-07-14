@@ -2,6 +2,13 @@ import db from "@repo/db/client";
 import CredentialsProvider from "next-auth/providers/credentials"
 import bcrypt from "bcrypt";
 
+/**
+ * Configuration object for authentication options.
+ * @type {Object}
+ * @property {Array} providers - Array of authentication providers.
+ * @property {string} secret - JWT secret key for authentication.
+ * @property {Object} callbacks - Object containing callback functions for authentication.
+ */
 export const authOptions = {
     providers: [
         CredentialsProvider({
