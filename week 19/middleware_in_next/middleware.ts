@@ -4,13 +4,10 @@ import { NextRequest, NextResponse } from "next/server";
 let reqCount = 0;
 
 // export function middleware(req: NextRequest) {
-
 //   reqCount++;
 //   console.log(`Request count: ${reqCount}`);
-
 //   const response = NextResponse.next();
 //   response.headers.set("user-request-count", reqCount.toString());
-
 //   return response;
 // }
 
@@ -21,10 +18,12 @@ let reqCount = 0;
 
 
 // 1- Custom matcher config
+
 // export const config = {
 //   matcher: ["/api/:path*"], // Only apply the middleware to routes that match this pattern
 //   //@ref: https://nextjs.org/docs/app/building-your-application/routing/middleware#matcher
 // };
+
 // but the problem with this approach is that you can't use the same middleware for multiple routes, what if you want to apply different middleware for different routes?
 // to solve this problem, you can use the second approach
 
