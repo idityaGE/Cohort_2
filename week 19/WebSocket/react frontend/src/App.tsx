@@ -6,6 +6,11 @@ function App() {
   const [msg, setMsg] = useState<string[]>([])
 
   useEffect(() => {
+    new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve("Done")
+      }, 2000)
+    })
     const socket = new WebSocket('ws://localhost:3000')
     socket.onopen = () => {
       console.log("Connected")
@@ -29,8 +34,15 @@ function App() {
 
   return (
     <>
+      <input type="text" />
+      <button onClick={() => {
+        socket.send("Hello from client")
+      }}>Send</button>
+
       {msg.map((msg, index) => {
-        <h3 key={index}> {msg}</h3>
+        return(
+          <h3 key={index}> {msg}</h3>
+        )
       })}
     </>
   )
