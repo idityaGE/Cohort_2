@@ -6,6 +6,7 @@ const httpServer = app.listen(3000, () => console.log("connected to port 3000"))
 
 const wss = new WebSocketServer({ server: httpServer })
 
+let userCount = 0
 wss.on("connection", (ws) => {
   ws.on('error', (err) => console.error(err))
 
@@ -16,7 +17,10 @@ wss.on("connection", (ws) => {
       }
     })
   })
-
+  console.log("userCount = ",++userCount)
   ws.send("Hello msg from WebSocket")
 })
 
+app.get("/", (req, res) => {
+  res.send("A webSocket Server")
+})
