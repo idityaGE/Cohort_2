@@ -4,13 +4,10 @@ import './App.css'
 function App() {
   const [socket, setSocket] = useState<null | WebSocket>(null)
   const [msg, setMsg] = useState<string[]>([])
+  const [inputMsg, setInputMsg] = useState("")
+
 
   useEffect(() => {
-    new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve("Done")
-      }, 2000)
-    })
     const socket = new WebSocket('ws://localhost:3000')
     socket.onopen = () => {
       console.log("Connected")
@@ -21,6 +18,9 @@ function App() {
       setMsg((pre: string[]): string[] => {
         return [...pre, msg.data]
       })
+    }
+    return () => {
+      socket.close()
     }
   }, [])
 
@@ -34,9 +34,11 @@ function App() {
 
   return (
     <>
-      <input type="text" />
+      <input type="text" onChange={(e) => {
+        setInputMsg(e.target.value)
+      }}/>
       <button onClick={() => {
-        socket.send("Hello from client")
+        socket.send(inputMsg)
       }}>Send</button>
 
       {msg.map((msg, index) => {
@@ -49,3 +51,32 @@ function App() {
 }
 
 export default App
+
+
+//TODO: we can also crate an useSocket hook that return the socket
+
+/*
+const useSocket = () => {
+  const [socket, setSocket] = useState<null | WebSocket>(null)
+  useEffect(()=>{
+    const socket = new WebSocket("ws://localhost:3000")
+    socket.onopen = () => {
+      console.log("WebSocket connection Sucessful")
+      setSocket(socket)
+    }
+    return () => {
+      socket.close()
+    }
+  },[])
+  return socket
+}
+// In diffrent file
+const socket = useSocket()
+const [msg, setMsg] = useState<string[]>([])
+useEffect(()=>{
+  socket.onmessage = (msg) => {
+    console.log("new msg recived:", msg.data)
+    setMsg((p) => [...p,msg.data])
+  }
+},[])
+*/
