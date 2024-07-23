@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "redis": "^4.6.15",
     "ws": "^8.18.0"
   },
   "devDependencies": {
