@@ -13,7 +13,7 @@ const processData = async (data: string) => {
   // Simulate processing delay
   await new Promise(resolve => setTimeout(resolve, 1000));
   console.log(`Finished processing submission for problemId ${problemId}.`);
-  publisher.publish('problem_done', JSON.stringify({ problemId, status: "TLE" }))
+  publisher.publish('problem_done', JSON.stringify({ problemId, userId, status: "TLE" }))
 }
 
 async function startWorker() {
