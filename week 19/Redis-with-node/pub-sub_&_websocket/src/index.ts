@@ -1,4 +1,4 @@
-import { WebSocketServer } from "ws";
+import WebSocket, { WebSocketServer } from "ws";
 import { createClient } from "redis";
 
 const client = createClient()
@@ -20,7 +20,11 @@ wss.on('connection', async (ws) => {
     console.log(message);
     ws.send(message)
     ws.on('message', (data, isBinary) => {
-      console.log(data)
-    })
-  });
+      wss.clients.forEach(client => {
+        if (client !== ws && client.readyState === WebSocket.OPEN) {
+          client.send(data, { binary: isBinary })
+        }
+      })
+    });
+  })
 })
