@@ -2,22 +2,25 @@ import { WebSocketServer } from "ws";
 import { createClient } from "redis";
 
 const client = createClient()
+console.log('Connected to redis')
 client.on('error', (err) => {
   console.log('Error : ' + err);
 })
 
-const wss = new WebSocketServer({ port : 8080 })
+const subscriber = client.duplicate()
 
-wss.on('connection', (ws) => {
+
+const wss = new WebSocketServer({ port: 8080 })
+
+
+wss.on('connection', async (ws) => {
   ws.on('error', console.error)
-  client.subscribe('problem_done', (err, count) => {
-    if (err) {
-      console.error('Error subscribing to channel:', err);
-    } else {
-      console.log('Subscribed to channel:', count);
-    }
-  });
-  client.on('message', (channel, message) => {
+  await subscriber.connect()
+  await subscriber.subscribe('problem_done', (message) => {
+    console.log(message);
     ws.send(message)
-  })
+    ws.on('message', (data, isBinary) => {
+      console.log(data)
+    })
+  });
 })

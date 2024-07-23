@@ -1,6 +1,6 @@
 import { createClient } from "redis";
 
-const client = createClient()
+const publisher = createClient()
 
 const processData = async (data: string) => {
   const { problemId, code, userId, lang } = JSON.parse(data)
@@ -13,16 +13,16 @@ const processData = async (data: string) => {
   // Simulate processing delay
   await new Promise(resolve => setTimeout(resolve, 1000));
   console.log(`Finished processing submission for problemId ${problemId}.`);
-  client.publish('problem_done', JSON.stringify({ problemId, status: "TLE" }))
+  publisher.publish('problem_done', JSON.stringify({ problemId, status: "TLE" }))
 }
 
 async function startWorker() {
   try {
-    await client.connect()
+    await publisher.connect()
     console.log('connected to redis')
     while (true) {
       try {
-        const data = await client.brPop('key', 0)
+        const data = await publisher.brPop('key', 0)
         //@ts-ignore
         await processData(data.element)
         console.log(`Data process done of problem`)
