@@ -1,6 +1,11 @@
 import { createClient } from "redis";
 
-const publisher = createClient()
+const redisHost = 'redis'; // Use the service name defined in docker-compose
+const redisPort = 6379; // Default Redis port
+
+const publisher = createClient({
+  url: `redis://${redisHost}:${redisPort}`
+});
 
 const processData = async (data: string) => {
   const { problemId, code, userId, lang } = JSON.parse(data)
