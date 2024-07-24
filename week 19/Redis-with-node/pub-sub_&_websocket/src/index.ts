@@ -1,12 +1,7 @@
 import WebSocket, { WebSocketServer } from "ws";
 import { createClient } from "redis";
 
-const redisHost = 'redis'; // Use the service name defined in docker-compose
-const redisPort = 6379; // Default Redis port
-
-const redisClient = createClient({
-  url: `redis://${redisHost}:${redisPort}`
-});
+const redisClient = createClient()
 console.log('Connected to Redis');
 
 const subscriber = redisClient.duplicate();
