@@ -1,6 +1,5 @@
 import express from 'express';
 import { createTodo, updateTodo } from './types';
-import mongoose from 'mongoose';
 import { Todo } from './db';
 import cors from 'cors';
 
