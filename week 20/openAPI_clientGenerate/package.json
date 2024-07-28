@@ -1,0 +1,9 @@
+{
+  "name": "openAPI_clientGenerate",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "openapi-typescript-codegen": "^0.29.0"
+  }
+}
