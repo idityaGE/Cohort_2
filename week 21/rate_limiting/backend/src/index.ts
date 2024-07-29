@@ -18,6 +18,7 @@ app.post('/generate-otp', (req, res) => {
   }
   const otp = Math.floor(100000 + Math.random() * 900000).toString(); // generates a 6-digit OTP
   otpStore[email] = otp;
+  // Send the OTP to the user via email, SMS, etc.
 
   console.log(`OTP for ${email}: ${otp}`); // Log the OTP to the console
   res.status(200).json({ message: "OTP generated and logged" });
@@ -26,6 +27,7 @@ app.post('/generate-otp', (req, res) => {
 // Endpoint to reset password
 app.post('/reset-password', (req, res) => {
   const { email, otp, newPassword } = req.body;
+  // console.log("Req came with email: ", email, " otp: ", otp, " newPassword: ", newPassword);
   if (!email || !otp || !newPassword) {
     return res.status(400).json({ message: "Email, OTP, and new password are required" });
   }
