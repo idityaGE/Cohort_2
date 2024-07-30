@@ -31,6 +31,7 @@ function App() {
         setToken(token)
       }} siteKey='0x4AAAAAAAgI8dfRB35eWaX8' />
       <br /><br />
+      //TODO: try to disable the button until captcha is solved
       <button onClick={() => {
         handleBtn(token)
       }}>Update password</button>
