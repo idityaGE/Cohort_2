@@ -1,8 +1,14 @@
 import express from 'express';
+import rateLimit from 'express-rate-limit';
+import axios from 'axios';
+import cors from 'cors';
 
 const app = express();
 const PORT = 3000;
 
+const SECRET_KEY = '0x4AAAAAAAgI8RAeKhyb1mit25rkfTF55-M';
+
+app.use(cors());
 app.use(express.json());
 
 // Store OTPs in a simple in-memory object
@@ -10,8 +16,25 @@ const otpStore: Record<string, string> = {}; // or you can use a Map
 // const oppStore = new Map<string, string>();
 // const optStore: { [key: string]: string } = {};
 
+// Rate limiter configuration
+const otpLimiter = rateLimit({
+  windowMs: 5 * 60 * 1000, // 5 minutes
+  max: 3, // Limit each IP to 3 OTP requests per windowMs
+  message: 'Too many requests, please try again after 5 minutes',
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
+
+const passwordResetLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5, // Limit each IP to 5 password reset requests per windowMs
+  message: 'Too many password reset attempts, please try again after 15 minutes',
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
 // Endpoint to generate and log OTP
-app.post('/generate-otp', (req, res) => {
+app.post('/generate-otp', otpLimiter, (req, res) => {
   const email = req.body.email;
   if (!email) {
     return res.status(400).json({ message: "Email is required" });
@@ -25,8 +48,25 @@ app.post('/generate-otp', (req, res) => {
 });
 
 // Endpoint to reset password
-app.post('/reset-password', (req, res) => {
-  const { email, otp, newPassword } = req.body;
+app.post('/reset-password', passwordResetLimiter,async (req, res) => {
+  const { email, otp, newPassword, token } = req.body;
+
+  console.log("Token : " + token);
+
+  const formData = new FormData();
+  formData.append('secret', SECRET_KEY);
+  formData.append('response', token);
+  console.log("Form Data : " + formData);
+
+  const url = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
+  const data = await axios.post(url, formData)
+
+  const challangeStatus = data.data.success;
+
+  if (!challangeStatus) {
+    return res.status(403).json({ message: "Captcha failed" });
+  }
+  
   // console.log("Req came with email: ", email, " otp: ", otp, " newPassword: ", newPassword);
   if (!email || !otp || !newPassword) {
     return res.status(400).json({ message: "Email, OTP, and new password are required" });
