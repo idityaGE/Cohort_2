@@ -51,12 +51,12 @@ app.post('/generate-otp', otpLimiter, (req, res) => {
 app.post('/reset-password', passwordResetLimiter,async (req, res) => {
   const { email, otp, newPassword, token } = req.body;
 
-  console.log("Token : " + token);
+  // console.log("Token : " + token);
 
   const formData = new FormData();
   formData.append('secret', SECRET_KEY);
   formData.append('response', token);
-  console.log("Form Data : " + formData);
+  // console.log("Form Data : " + formData);
 
   const url = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
   const data = await axios.post(url, formData)
