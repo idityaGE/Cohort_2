@@ -1,6 +1,7 @@
 import express from "express";
 import cluster from "cluster"; // node js module
 import os from "os";  // node js module
+import process from "process";  // node js module
 
 // By using the cluster module, we can create a multi-threaded server that can handle multiple requests simultaneously without port conflict.
 
