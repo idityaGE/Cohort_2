@@ -45,13 +45,15 @@ const Receiver = () => {
     };
 
     newPc.ontrack = (event) => {
-      if(videoRef.current) {
+      if (videoRef.current) {
         videoRef.current.srcObject = new MediaStream([event.track]);
-        videoRef.current.play();
+        // videoRef.current.play();
+        videoRef.current.onloadedmetadata = () => {
+          videoRef.current?.play();
+        };
       }
     };
 
-    // Clean up on component unmount
     return () => {
       socket.close();
       newPc.close();
@@ -62,6 +64,7 @@ const Receiver = () => {
     <div>
       <h1>Receiver</h1>
       <video ref={videoRef} autoPlay></video>
+      <button onClick={() => videoRef.current?.play()}>play</button>
     </div>
   );
 };

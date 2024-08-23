@@ -16,7 +16,6 @@ const Sender = () => {
     newSocket.onerror = (error) => console.error("WebSocket error:", error);
     newSocket.onclose = () => console.log("WebSocket closed (Sender)");
 
-    // Clean up on component unmount
     return () => {
       newSocket.close();
       pc?.close();
@@ -66,10 +65,11 @@ const Sender = () => {
     getStream(newPc);
   };
 
-  const getStream = async (peerConnection: RTCPeerConnection) => {
+  const getStream = async (pc: RTCPeerConnection) => {
     try {
+      // const display = await navigator.mediaDevices.getDisplayMedia({ video: true }); // for screen sharing
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-      stream.getTracks().forEach(track => peerConnection.addTrack(track, stream));
+      stream.getTracks().forEach(track => pc.addTrack(track, stream));
       videoRef.current!.srcObject = stream;
       console.log("Stream added to Peer Connection on Sender");
     } catch (error) {
