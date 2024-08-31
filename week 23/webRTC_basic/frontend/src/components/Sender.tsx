@@ -67,7 +67,7 @@ const Sender = () => {
 
   const getStream = async (pc: RTCPeerConnection) => {
     try {
-      // const display = await navigator.mediaDevices.getDisplayMedia({ video: true }); // for screen sharing
+      // const display = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: false }); // for screen sharing
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
       stream.getTracks().forEach(track => pc.addTrack(track, stream));
       videoRef.current!.srcObject = stream;
