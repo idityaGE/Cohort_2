@@ -1,10 +1,10 @@
 import {describe, expect, test, it} from '@jest/globals';
-import request from "supertest";
+import request from "supertest"; // supertest is used to test the express app
 import { app } from "../index"
 
 describe("POST /sum", () => {
   it("should return the sum of two numbers", async () => {
-      const res = await request(app).post("/sum").send({
+      const res = await request(app).post("/sum").send({  // sending body
         a: 1,
         b: 2
       });
@@ -12,7 +12,7 @@ describe("POST /sum", () => {
       expect(res.body.answer).toBe(3);
     });
 
-    it("should return 411 if no inputs are provided", async () => {
+    it("should return 411 if no inputs are provided", async () => {  // checking for wrong inputs
       const res = await request(app).post("/sum").send({});
       expect(res.statusCode).toBe(411);
       expect(res.body.message).toBe("Incorrect inputs");
@@ -25,7 +25,7 @@ describe("GET /sum", () => {
   it("should return the sum of two numbers", async () => {
       const res = await request(app)
         .get("/sum")
-        .set({
+        .set({ // setting headers
           a: "1",
           b: "2"
         })
@@ -34,7 +34,7 @@ describe("GET /sum", () => {
       expect(res.body.answer).toBe(3);
   });
 
-  it("should return 411 if no inputs are provided", async () => {
+  it("should return 411 if no inputs are provided", async () => {  // checking for wrong inputs
     const res = await request(app)
       .get("/sum").send();
     expect(res.statusCode).toBe(411);
