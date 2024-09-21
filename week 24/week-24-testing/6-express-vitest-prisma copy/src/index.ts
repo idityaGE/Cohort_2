@@ -21,7 +21,7 @@ app.post("/sum", async (req, res) => {
 
     const answer = parsedResponse.data.a + parsedResponse.data.b;
 
-    await prismaClient.sum.create({
+    const response = await prismaClient.sum.create({
         data: {
             a: parsedResponse.data.a,
             b: parsedResponse.data.b,
@@ -30,11 +30,12 @@ app.post("/sum", async (req, res) => {
     })
 
     res.json({
-        answer
+        answer,
+        id: response.id
     })
 });
 
-app.get("/sum", (req, res) => {
+app.get("/sum", async (req, res) => {
     const parsedResponse = sumInput.safeParse({
         a: Number(req.headers["a"]),
         b: Number(req.headers["b"])
@@ -48,7 +49,15 @@ app.get("/sum", (req, res) => {
 
     const answer = parsedResponse.data.a + parsedResponse.data.b;
 
+    const response = await prismaClient.sum.create({
+        data: {
+            a: parsedResponse.data.a,
+            b: parsedResponse.data.b,
+            result: answer
+        }
+    })
     res.json({
-        answer
+        answer,
+        id: response.id
     })
 });
