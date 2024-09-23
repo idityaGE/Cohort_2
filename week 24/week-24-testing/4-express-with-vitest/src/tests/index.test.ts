@@ -1,4 +1,4 @@
-import {describe, expect, test, it} from 'vitest';
+import {describe, expect, test, it} from 'vitest'; // vitest is very backword compatible with jest
 import request from "supertest";
 import { app } from "../index"
 

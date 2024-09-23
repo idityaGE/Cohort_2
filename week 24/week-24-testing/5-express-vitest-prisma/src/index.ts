@@ -1,13 +1,15 @@
 import express from "express";
 import { z } from "zod";
 import { prismaClient } from "./db";
+import { RequestType } from "@prisma/client";
 
 export const app = express();
 app.use(express.json());
 
 const sumInput = z.object({
     a: z.number(),
-    b: z.number()
+    b: z.number(),
+    type: z.enum([RequestType.ADD, RequestType.MULTIPLY])
 })
 
 app.post("/sum", async (req, res) => {
@@ -17,11 +19,15 @@ app.post("/sum", async (req, res) => {
             message: "Incorrect inputs"
         })
     }
-    const answer = parsedResponse.data.a + parsedResponse.data.b;
+
+    const { a, b, type } = parsedResponse.data;
+
+    const answer = type === RequestType.ADD ? a + b : a * b;
     await prismaClient.sum.create({
         data: {
-            a: parsedResponse.data.a,
-            b: parsedResponse.data.b,
+            a,
+            b,
+            type,
             result: answer
         }
     })

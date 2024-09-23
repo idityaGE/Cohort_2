@@ -14,8 +14,14 @@ datasource db {
 }
 
 model Sum {
-  id          Int @id   @default(autoincrement())
-  a           Int
-  b           Int
-  result      Int
+  id     Int         @id @default(autoincrement())
+  a      Int
+  b      Int
+  result Int
+  type   RequestType
+}
+
+enum RequestType {
+  ADD
+  MULTIPLY
 }
