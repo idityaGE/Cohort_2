@@ -19,19 +19,22 @@ app.post("/sum", async (req, res) => {
         })
     }
 
-    const answer = parsedResponse.data.a + parsedResponse.data.b;
+    const { a, b } = parsedResponse.data;
+
+    const answer = a + b;
 
     const response = await prismaClient.sum.create({
-        data: {
-            a: parsedResponse.data.a,
-            b: parsedResponse.data.b,
+        data: { // if we flip a and b here, the test will still pass, because the test is not checking the data that is being sent to the database
+            // to deal with this we need to spy on this method and check if it was called with the correct data
+            a: a,
+            b: b,
             result: answer
         }
     })
 
     res.json({
         answer,
-        id: response.id
+        id: response.id  // here we are returning the id the of reasponse which is mocked in the test, to deal we need to mock the return value of the create method
     })
 });
 

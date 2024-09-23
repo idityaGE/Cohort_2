@@ -7,6 +7,7 @@ vi.mock('../db');
 
 describe("POST /sum", () => {
   it("should return the sum of two numbers", async () => {
+    // mockResolvedValue is a function that mocks the return value of a function
     prismaClient.sum.create.mockResolvedValue({
       id: 1,
       a: 1,
@@ -14,6 +15,7 @@ describe("POST /sum", () => {
       result: 3
     });
 
+    // spyOn is a function that spies on a function and checks if it was called with the correct data
     vi.spyOn(prismaClient.sum, "create");
 
     const res = await request(app).post("/sum").send({
@@ -21,6 +23,7 @@ describe("POST /sum", () => {
       b: 2
     });
 
+    // toHaveBeenCalledWith is a function that checks if the function was called with the correct data
     expect(prismaClient.sum.create).toHaveBeenCalledWith({
       data: {
         a: 1,
@@ -31,6 +34,7 @@ describe("POST /sum", () => {
 
     expect(res.statusCode).toBe(200);
     expect(res.body.answer).toBe(3);
+    expect(res.body.id).exist;
   });
 
   it("should return 411 if no inputs are provided", async () => {
