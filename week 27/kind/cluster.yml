@@ -1,0 +1,40 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+- role: control-plane
+- role: worker
+- role: worker
+
+
+
+
+
+
+# PS C:\Users\Aditya\Desktop\cohort-assignment\week 27\kind>  kind create cluster --config cluster.yml --name local 
+# Creating cluster "local" ...
+#  • Ensuring node image (kindest/node:v1.31.0) 🖼  ...
+#  ✓ Ensuring node image (kindest/node:v1.31.0) 🖼
+#  • Preparing nodes 📦 📦 📦   ...
+#  ✓ Preparing nodes 📦 📦 📦 
+#  • Writing configuration 📜  ...
+#  ✓ Writing configuration 📜
+#  • Starting control-plane 🕹️  ...
+#  ✓ Starting control-plane 🕹️
+#  • Installing CNI 🔌  ...
+#  ✓ Installing CNI 🔌
+#  • Installing StorageClass 💾  ...
+#  ✓ Installing StorageClass 💾
+#  • Joining worker nodes 🚜  ...
+#  ✓ Joining worker nodes 🚜
+# Set kubectl context to "kind-local"
+# You can now use your cluster with:
+
+# kubectl cluster-info --context kind-local
+
+# Have a nice day! 👋
+# PS C:\Users\Aditya\Desktop\cohort-assignment\week 27\kind> docker ps
+# CONTAINER ID   IMAGE                  COMMAND                  CREATED          STATUS          PORTS                       NAMES
+# 0b889265de03   kindest/node:v1.31.0   "/usr/local/bin/entr…"   36 seconds ago   Up 33 seconds   127.0.0.1:64673->6443/tcp   local-control-plane
+# 33c0fad3c55c   kindest/node:v1.31.0   "/usr/local/bin/entr…"   36 seconds ago   Up 33 seconds                               local-worker
+# 6708a464266e   kindest/node:v1.31.0   "/usr/local/bin/entr…"   36 seconds ago   Up 33 seconds                               local-worker2
+# PS C:\Users\Aditya\Desktop\cohort-assignment\week 27\kind> 
