@@ -6,7 +6,7 @@ export class SignalingManager {
     private ws: WebSocket;
     private static instance: SignalingManager;
     private bufferedMessages: any[] = [];
-    private callbacks: any = {};
+    private callbacks: { [type: string]: any[] } = {};
     private id: number;
     private initialized: boolean = false;
 
@@ -18,7 +18,7 @@ export class SignalingManager {
     }
 
     public static getInstance() {
-        if (!this.instance)  {
+        if (!this.instance) {
             this.instance = new SignalingManager();
         }
         return this.instance;
@@ -48,8 +48,8 @@ export class SignalingManager {
                         }
 
                         callback(newTicker);
-                   }
-                   if (type === "depth") {
+                    }
+                    if (type === "depth") {
                         // const newTicker: Partial<Ticker> = {
                         //     lastPrice: message.data.c,
                         //     high: message.data.h,

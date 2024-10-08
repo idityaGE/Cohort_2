@@ -5,17 +5,16 @@ const BASE_URL = "https://exchange-proxy.100xdevs.com/api/v1";
 
 export async function getTicker(market: string): Promise<Ticker> {
     const tickers = await getTickers();
-    const ticker = tickers.find(t => t.symbol === market);
+    const ticker = tickers.find(ticker => ticker.symbol === market);
     if (!ticker) {
         throw new Error(`No ticker found for ${market}`);
     }
     return ticker;
 }
-const x = getTickers()
 
-export async function getTickers(): Promise<number> {
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    return 1;
+export async function getTickers(): Promise<Ticker[]> {
+    const response = await axios.get(`${BASE_URL}/tickers`);
+    return response.data;
 }
 
 

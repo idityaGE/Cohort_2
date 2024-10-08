@@ -14,10 +14,11 @@ export function TradeView({
   const init = async () => {
     let klineData: KLine[] = [];
     try {
-      klineData = await getKlines(market, "1h", Math.floor((new Date().getTime() - 1000 * 60 * 60 * 24 * 7) / 1000), Math.floor(new Date().getTime() / 1000)); 
-
-    } catch (e) { }
-
+      klineData = await getKlines(market, "1h", Math.floor((new Date().getTime() - 1000 * 60 * 60 * 24 * 7) / 1000), Math.floor(new Date().getTime() / 1000));
+    } catch (e) { 
+      console.error(e);
+    }
+    
     if (chartRef) {
       if (chartManagerRef.current) {
         chartManagerRef.current.destroy();
@@ -30,7 +31,7 @@ export function TradeView({
             high: parseFloat(x.high),
             low: parseFloat(x.low),
             open: parseFloat(x.open),
-            timestamp: new Date(x.end), 
+            timestamp: new Date(x.end),
           })),
         ].sort((x, y) => (x.timestamp < y.timestamp ? -1 : 1)) || [],
         {
@@ -44,7 +45,7 @@ export function TradeView({
   };
 
   useEffect(() => {
-      init();
+    init();
   }, [market, chartRef]);
 
   return (
