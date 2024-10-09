@@ -1,12 +1,16 @@
+"use client";
+
 
 export const BidTable = ({ bids }: {bids: [string, string][]}) => {
     let currentTotal = 0; 
-    const relevantBids = bids.slice(0, 15);
+    const relevantBids = bids.filter(([_, quantity]) => Number(quantity) > 0);
     const bidsWithTotal: [string, string, number][] = relevantBids.map(([price, quantity]) => [price, quantity, currentTotal += Number(quantity)]);
-    const maxTotal = relevantBids.reduce((acc, [_, quantity]) => acc + Number(quantity), 0);
+    
+    const first15Bids = bidsWithTotal.slice(0, 15);
+    const maxTotal = first15Bids.reduce((acc, [_, quantity]) => acc + Number(quantity), 0);
 
     return <div>
-        {bidsWithTotal?.map(([price, quantity, total]) => <Bid maxTotal={maxTotal} total={total} key={price} price={price} quantity={quantity} />)}
+        {first15Bids?.map(([price, quantity, total]) => <Bid maxTotal={maxTotal} total={total} key={price} price={price} quantity={quantity} />)}
     </div>
 }
 
@@ -26,7 +30,7 @@ function Bid({ price, quantity, total, maxTotal }: { price: string, quantity: st
             position: "absolute",
             top: 0,
             left: 0,
-            width: `${(100 * total) / maxTotal}%`,
+            width: `${(70 * total) / maxTotal}%`,
             height: "100%",
             background: "rgba(1, 167, 129, 0.325)",
             transition: "width 0.3s ease-in-out",

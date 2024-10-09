@@ -1,4 +1,4 @@
-import { Ticker } from "./types";
+import { BackendDepth, Ticker, Trade } from "./types";
 
 export const BASE_URL = "wss://ws.backpack.exchange/"
 
@@ -46,23 +46,22 @@ export class SignalingManager {
                             quoteVolume: message.data.V,
                             symbol: message.data.s,
                         }
-
                         callback(newTicker);
                     }
                     if (type === "depth") {
-                        // const newTicker: Partial<Ticker> = {
-                        //     lastPrice: message.data.c,
-                        //     high: message.data.h,
-                        //     low: message.data.l,
-                        //     volume: message.data.v,
-                        //     quoteVolume: message.data.V,
-                        //     symbol: message.data.s,
-                        // }
-                        // console.log(newTicker);
-                        // callback(newTicker);
                         const updatedBids = message.data.b;
                         const updatedAsks = message.data.a;
                         callback({ bids: updatedBids, asks: updatedAsks });
+                    }
+                    if (type === "trade") {
+                        const newTrade: Partial<Trade> = {
+                            price: message.data.p,
+                            quantity: message.data.q,
+                            quoteQuantity: message.data.Q,
+                            isBuyerMaker: message.data.m,
+                            timestamp: message.data.T
+                        }
+                        callback(newTrade);
                     }
                 });
             }

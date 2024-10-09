@@ -1,14 +1,16 @@
+"use client";
+
 
 export const AskTable = ({ asks }: { asks: [string, string][] }) => {
     let currentTotal = 0;
-    const relevantAsks = asks.slice(0, 15);
-    relevantAsks.reverse();
+    const relevantAsks = asks.filter(([_, quantity]) => Number(quantity) > 0);
     const asksWithTotal: [string, string, number][] = relevantAsks.map(([price, quantity]) => [price, quantity, currentTotal += Number(quantity)]);
-    const maxTotal = relevantAsks.reduce((acc, [_, quantity]) => acc + Number(quantity), 0);
-    asksWithTotal.reverse();
+    const first15Asks = asksWithTotal.slice(0, 15);
+    first15Asks.reverse();
+    const maxTotal = first15Asks.reduce((acc, [_, quantity]) => acc + Number(quantity), 0);
 
     return <div>
-        {asksWithTotal.map(([price, quantity, total]) => <Ask maxTotal={maxTotal} key={price} price={price} quantity={quantity} total={total} />)}
+        {first15Asks?.map(([price, quantity, total]) => <Ask maxTotal={maxTotal} key={price} price={price} quantity={quantity} total={total} />)}
     </div>
 }
 function Ask({price, quantity, total, maxTotal}: {price: string, quantity: string, total: number, maxTotal: number}) {
@@ -26,7 +28,7 @@ function Ask({price, quantity, total, maxTotal}: {price: string, quantity: strin
         position: "absolute",
         top: 0,
         left: 0,
-        width: `${(100 * total) / maxTotal}%`,
+        width: `${(70 * total) / maxTotal}%`,
         height: "100%",
         background: "rgba(228, 75, 68, 0.325)",
         transition: "width 0.3s ease-in-out",
