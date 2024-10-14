@@ -13,7 +13,7 @@ export class SubscriptionManager {
     }
 
     public static getInstance() {
-        if (!this.instance)  {
+        if (!this.instance) {
             this.instance = new SubscriptionManager();
         }
         return this.instance;
@@ -23,11 +23,9 @@ export class SubscriptionManager {
         if (this.subscriptions.get(userId)?.includes(subscription)) {
             return
         }
-
         this.subscriptions.set(userId, (this.subscriptions.get(userId) || []).concat(subscription));
         this.reverseSubscriptions.set(subscription, (this.reverseSubscriptions.get(subscription) || []).concat(userId));
         if (this.reverseSubscriptions.get(subscription)?.length === 1) {
-
             this.redisClient.subscribe(subscription, this.redisCallbackHandler);
         }
     }
@@ -56,7 +54,7 @@ export class SubscriptionManager {
         console.log("user left " + userId);
         this.subscriptions.get(userId)?.forEach(s => this.unsubscribe(userId, s));
     }
-    
+
     getSubscriptions(userId: string) {
         return this.subscriptions.get(userId) || [];
     }
