@@ -1,0 +1,2 @@
+Writing data to stream
+More data
