@@ -14,7 +14,7 @@ function App() {
       settodos(data.data)
     }
     todosData()
-  }, [])
+  }, [todos])
 
   // console.log(todos)
 

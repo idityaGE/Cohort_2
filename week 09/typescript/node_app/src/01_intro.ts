@@ -101,7 +101,7 @@ type jgbker = {
 }[]
 
 let signalcolor: "red" | "yellow" | "green" = "green"
-signalcolor = "red"
+signalcolor = "yellow"
 
 const addi: { name: string }[] = [{ name: "mohit" }, { name: "adii" }]
 

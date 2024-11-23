@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const connectDB = async () => {
-    await mongoose.connect("mongodb+srv://admin:Aditya%404491@cluster0.ym43zx8.mongodb.net/todo");
+    await mongoose.connect("mongodb://admin:secret@localhost:27017");
 }
 connectDB().then(res => console.log("Connected to db")).catch(err => console.log(err));
 

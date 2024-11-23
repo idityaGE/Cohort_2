@@ -1,11 +1,9 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useState } from 'react'
-import { useRef } from 'react'
 
 function CreateTodo() {
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
-    const refbtn = useRef()
 
     const onclickhandler = () => {
         fetch('http://localhost:3000/todo', {
@@ -28,19 +26,21 @@ function CreateTodo() {
         //todo form
         <div className='flex flex-col space-y-4 w-1/2 border-2 rounded-md p-5'>
             <input
-                onChange={(e) => { setTitle(e.target.value)}}
+                onChange={(e) => { setTitle(e.target.value) }}
                 type="text"
                 placeholder='Title'
                 className='border border-gray-300 p-2 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500'
             />
             <input
-                onChange={(e) => { setDescription(e.target.value)}}
+                onChange={(e) => { setDescription(e.target.value) }}
                 type="text"
                 placeholder='Description'
                 className='border border-gray-300 p-2 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500'
             />
-            <button className='bg-blue-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-600'
-            onClick={onclickhandler} ref={refbtn}>
+            <button
+                className='bg-blue-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-600'
+                onClick={onclickhandler}
+            >
                 Add Todo
             </button>
         </div>
