@@ -7,9 +7,6 @@ import cors from 'cors';
 // server
 const app = express();
 const port = 3000;
-app.listen(port, () => {
-    console.log(`Server is running at port ${port}`);
-});
 
 // middlewares
 app.use(express.urlencoded({ extended: true }));
@@ -22,7 +19,7 @@ app.use(cors(
 
 // Routes
 app.get('/', (req, res) => {
-    res.send("Hello World");
+    res.status(200).json({ message: "Hello World" });
 });
 
 app.post('/todo', async (req, res) => {
@@ -78,3 +75,7 @@ app.put('/completed', async (req, res) => {
 })
 
 
+
+app.listen(port, () => {
+    console.log(`Server is running at port ${port}`);
+});
