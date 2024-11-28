@@ -24,7 +24,7 @@ function Github() {
 
 export default Github
 
-export const githubInfoLoader = async() => {
+export const githubInfoLoader = async () => {
     let data = await fetch('https://api.github.com/users/idityage')
     return data.json()
 }

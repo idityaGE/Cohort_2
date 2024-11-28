@@ -3,7 +3,9 @@ import { BrowserRouter, Link, Routes, useNavigate } from "react-router-dom"
 //carefull with Routes and Router
 import { Route } from "react-router-dom"
 import Landing from "./components/Landing"
+
 const Dashboard = React.lazy(() => import("./components/Dashboard")) // lazy loading used to load the component only when it is needed
+
 import { Suspense } from "react" // used to show a loading message while the component is being loaded
 
 function App() {
