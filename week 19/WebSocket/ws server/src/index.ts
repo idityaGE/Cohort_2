@@ -16,7 +16,6 @@ wss.on("connection", (ws) => {
         client.send(data, { binary: isBinary });
       }
     })
-   })
   })
   console.log("userCount = ", ++userCount)
   ws.send("Hello msg from WebSocket")
