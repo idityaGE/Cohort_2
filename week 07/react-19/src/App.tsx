@@ -3,8 +3,9 @@
 // import Diduplication from "./components/Diduplication"
 // import Staletime from "./components/Staletime"
 // import MultipleQueries from "./components/MultipleQueries"
+// import Mutationhook from "./components/Mutationhook"
 
-import Mutationhook from "./components/Mutationhook"
+import Pagination from "./components/Pagination"
 
 const App = () => {
   return (
@@ -15,7 +16,8 @@ const App = () => {
       {/* <Diduplication /> */}
       {/* <Staletime /> */}
       {/* <MultipleQueries /> */}
-      <Mutationhook />
+      {/* <Mutationhook /> */}
+      <Pagination />
     </div>
   )
 }
